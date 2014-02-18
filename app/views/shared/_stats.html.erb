@@ -4,12 +4,14 @@
         <strong id="following" class="stat">
             <%= @user.followed_users.count %>
         </strong>
-        following
+        to review
     </a>
     <a href="<%= followers_user_path(@user) %>">
         <strong id="followers" class="stat">
             <%= followers_count = @user.followers.count %>
         </strong>
-        <%= "follower".pluralize(followers_count) %>
+        reviewed
+        <%= #"follower".pluralize(followers_count) 
+        %>
     </a>
 </div>

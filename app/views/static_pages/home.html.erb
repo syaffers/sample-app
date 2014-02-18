@@ -8,25 +8,38 @@
                 <%= render 'shared/stats'%>
             </section>
             <section>
-                <%= render 'shared/micropost_form' %>
+                <%= #render 'shared/micropost_form' 
+                %>
             </section>
         </aside>
         <div class="span8">
-            <h3>Micropost Feed</h3>
-            <%= render 'shared/feed' %>
+            <h3>Papers</h3>
+            <%= #render 'shared/feed' 
+            %>
         </div>
     </div>
 <% else %>
 <div class="center hero-unit">
-	<h1>Welcome to the Sample App</h1>
+	<h1>Welcome to Transpub</h1>
 	
 	<h2>
-		This is the home page for the 
-		<a href="http://railstutorial.org">Ruby on Rails Tutorial</a> 
-		sample application
+		Lorem ipsum dolor sit amet, 
+		<a href="#">consectetur adipiscing elit.</a>
+		Morbi elementum vestibulum mi quis bibendum.
 	</h2>
 	
 	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
 </div>
-<%= link_to image_tag("rails.png", alt: "Rails"), "http://rubyonrails.org" %>
+<div class="row">
+    <div class="span4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elementum vestibulum mi quis bibendum. Nulla facilisi. Cras bibendum mi in dignissim vestibulum. Donec lobortis, massa eu faucibus congue, tortor lectus placerat metus, et facilisis ante nibh nec ligula. Proin id nunc ut purus egestas ultrices. Praesent ullamcorper libero vel sem ullamcorper accumsan. Donec condimentum, ligula vitae adipiscing tristique, lectus ipsum vehicula nulla, et tristique nunc dui non risus. Nulla lobortis velit at ipsum adipiscing elementum. Vivamus ac consequat eros, sit amet tristique quam.
+    </div>
+    <div class="span4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elementum vestibulum mi quis bibendum. Nulla facilisi. Cras bibendum mi in dignissim vestibulum. Donec lobortis, massa eu faucibus congue, tortor lectus placerat metus, et facilisis ante nibh nec ligula. Proin id nunc ut purus egestas ultrices. Praesent ullamcorper libero vel sem ullamcorper accumsan. Donec condimentum, ligula vitae adipiscing tristique, lectus ipsum vehicula nulla, et tristique nunc dui non risus. Nulla lobortis velit at ipsum adipiscing elementum. Vivamus ac consequat eros, sit amet tristique quam.
+    </div>
+    <div class="span4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elementum vestibulum mi quis bibendum. Nulla facilisi. Cras bibendum mi in dignissim vestibulum. Donec lobortis, massa eu faucibus congue, tortor lectus placerat metus, et facilisis ante nibh nec ligula. Proin id nunc ut purus egestas ultrices. Praesent ullamcorper libero vel sem ullamcorper accumsan. Donec condimentum, ligula vitae adipiscing tristique, lectus ipsum vehicula nulla, et tristique nunc dui non risus. Nulla lobortis velit at ipsum adipiscing elementum. Vivamus ac consequat eros, sit amet tristique quam.
+    </div>
+</div>
+        
 <% end %>

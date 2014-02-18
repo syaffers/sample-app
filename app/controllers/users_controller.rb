@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if @user.save
       # go to user page
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome to TransPub!"
       redirect_to @user
     else 
       # Go back to form again
