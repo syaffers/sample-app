@@ -1,17 +1,29 @@
 <% @user ||= current_user %>
 <div class="stats">
-    <a href="<%= following_user_path(@user) %>">
-        <strong id="following" class="stat">
-            <%= @user.followed_users.count %>
+    <a href="<%= #following_user_path(@user) 
+    %>">
+        <strong id="review" class="stat">
+            1
+            <%= #@user.followed_users.count 
+            %>
         </strong>
         to review
     </a>
-    <a href="<%= followers_user_path(@user) %>">
-        <strong id="followers" class="stat">
-            <%= followers_count = @user.followers.count %>
+    <a href="<%= #followers_user_path(@user) 
+    %>">
+        <strong id="reviewed" class="stat">
+            2
+            <%= #followers_count = @user.followers.count 
+            %>
         </strong>
         reviewed
         <%= #"follower".pluralize(followers_count) 
         %>
+    </a>
+    <a href="#">
+        <strong id="published">
+            <%= papers_count = @user.papers.count %>
+        </strong>
+        published
     </a>
 </div>

@@ -1,0 +1,43 @@
+<% provide(:title, "Search Papers")%>
+<h1>Search Papers</h1>
+<div class="row">
+    <div class="span12">
+        <%= form_tag papers_path, method: "get" do %>
+            <%= label_tag :search, "Search papers:" %>
+            <%= text_field_tag :search, params[:search] %>
+            <%= submit_tag "Search", class: "btn btn-primary", :name => nil%>
+        <% end %>
+    </div>
+    <div class="span12">
+        <% if !params[:search].blank? %>
+            <h4>Search results for "<%= params[:search] %>"</h4>
+            <% if @papers.any? %>
+                <% @papers.each do |paper| %>
+                    <p>
+                        <span><%= paper.title %></span>
+                        <span><%= paper.url %></span>
+                        <span><%= paper.user_id %></span>
+                        <span><%= link_to 'Show', paper %></span>
+                        <span><%= link_to 'Edit', edit_paper_path(paper) %></span>
+                        <span><%= link_to 'Destroy', paper, method: :delete, data: { confirm: 'Are you sure?' } %></span>
+                    </p>
+                <% end %>
+            <% else %>
+                <p>No results found</p>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+<h3>Newest Papers</h3>
+<div class="row">
+    <% @newest = Paper.find(:all, :order => "created_at DESC", :limit => 3) %>
+    <% @newest.each do |paper| %>
+    <div class="span4">
+        <h5><%= paper.title %></h5>
+        <small>Uploaded on <%= paper.created_at %> by <%= paper.user_id %></small>
+        <p><%= paper.url%></p>
+    </div>
+    <% end %>
+</div>
+
+<%= link_to 'New Paper', new_paper_path %>

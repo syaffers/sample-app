@@ -1,0 +1,9 @@
+<li class="paper">
+    <span class="title"><%= paper.title %></span>
+    <span class="timestamp">
+        Uploaded on <%= paper.created_at %>
+    </span>
+    <% if current_user?(paper.user) %>
+        <%= link_to "Delete", paper, method: :delete, data: { confirm: "You sure?" }, title: paper.title %>
+    <% end %>
+</li>
