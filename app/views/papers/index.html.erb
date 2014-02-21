@@ -30,8 +30,7 @@
 </div>
 <h3>Newest Papers</h3>
 <div class="row">
-    <% @newest = Paper.find(:all, :order => "created_at DESC", :limit => 3) %>
-    <% @newest.each do |paper| %>
+    <% @newest_papers.each do |paper| %>
     <div class="span4">
         <h5><%= paper.title %></h5>
         <small>Uploaded on <%= paper.created_at %> by <%= paper.user_id %></small>

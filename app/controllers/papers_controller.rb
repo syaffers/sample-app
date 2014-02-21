@@ -5,6 +5,7 @@ class PapersController < ApplicationController
   # GET /papers.json
   def index
     @papers = Paper.search(params[:search])
+    @newest_papers = Paper.find(:all, :order => "created_at DESC", :limit => 3)
   end
 
   # GET /papers/1
