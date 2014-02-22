@@ -61,6 +61,10 @@ class PapersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def browse
+    @papers = Paper.find(:all)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -70,6 +74,6 @@ class PapersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:title, :url, :user_id)
+      params.require(:paper).permit(:title, :url, :user_id, :subject_field)
     end
 end

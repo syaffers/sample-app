@@ -56,8 +56,8 @@ h2 {
 }
 
 p {
-  font-size: 1.1em;
-  line-height: 1.7em;
+  font-size: 0.9em;
+  line-height: 1.2em;
 }
   
 /* header */
@@ -207,6 +207,26 @@ aside {
   textarea {
     height: 100px;
     margin-bottom: 5px;
+  }
+}
+
+/* search */
+.search-form {
+  input[type=text] {
+    width: 60%;
+  }
+  .browse-paper-link {
+    float: right;
+  }
+}
+.search-results {
+  margin-bottom: 24px;
+  .results-for {
+    margin-bottom: 24px;
+  }
+  .paper {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 12px;
   }
 }
 
