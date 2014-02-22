@@ -1,26 +1,28 @@
 <% provide(:title, "Search Papers")%>
 <h1>Search Papers</h1>
 <div class="row">
-    <div class="span12">
-        <%= form_tag papers_path, method: "get" do %>
-            <%= label_tag :search, "Search papers:" %>
+    <div class="span12 search-form">
+        <%= form_tag papers_path, method: "get", class: "form-inline" do %>
+            <% label_tag :search, "Search papers:" %>
             <%= text_field_tag :search, params[:search] %>
             <%= submit_tag "Search", class: "btn btn-primary", :name => nil%>
+            <%= link_to "Browse papers...", browse_papers_path, class: "browse-paper-link" %>
         <% end %>
+        
     </div>
-    <div class="span12">
+    <div class="span12 search-results">
         <% if !params[:search].blank? %>
-            <h4>Search results for "<%= params[:search] %>"</h4>
+            <h4 class="results-for">Search results for "<%= params[:search] %>"</h4>
             <% if @papers.any? %>
                 <% @papers.each do |paper| %>
-                    <p>
-                        <span><%= paper.title %></span>
-                        <span><%= paper.url %></span>
-                        <span><%= paper.user_id %></span>
-                        <span><%= link_to 'Show', paper %></span>
+                    <div class="paper">
+                        <h5><%= link_to paper.title, paper %></h5>
+                        <p>Posted by: <%= link_to paper.user.name, paper.user %> in <%= paper.subject_field %></p>
+                        <a href="<%= paper.url %>">Stable URL: <%= paper.url %></a>
+                        <!--<span><%= link_to 'Show', paper %></span>
                         <span><%= link_to 'Edit', edit_paper_path(paper) %></span>
-                        <span><%= link_to 'Destroy', paper, method: :delete, data: { confirm: 'Are you sure?' } %></span>
-                    </p>
+                        <span><%= link_to 'Destroy', paper, method: :delete, data: { confirm: 'Are you sure?' } %></span>-->
+                    </div>
                 <% end %>
             <% else %>
                 <p>No results found</p>
@@ -32,9 +34,8 @@
 <div class="row">
     <% @newest_papers.each do |paper| %>
     <div class="span4">
-        <h5><%= paper.title %></h5>
-        <small>Uploaded on <%= paper.created_at %> by <%= paper.user_id %></small>
-        <p><%= paper.url%></p>
+        <h5><%= link_to paper.title, paper %></h5>
+        <p>Uploaded on <%= paper.created_at.strftime("%d %b. %Y") %> by <%= paper.user.name %> in <%= paper.subject_field%></p>
     </div>
     <% end %>
 </div>
