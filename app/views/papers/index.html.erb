@@ -8,7 +8,6 @@
             <%= submit_tag "Search", class: "btn btn-primary", :name => nil%>
             <%= link_to "Browse papers...", browse_papers_path, class: "browse-paper-link" %>
         <% end %>
-        
     </div>
     <div class="span12 search-results">
         <% if !params[:search].blank? %>
@@ -17,7 +16,7 @@
                 <% @papers.each do |paper| %>
                     <div class="paper">
                         <h5><%= link_to paper.title, paper %></h5>
-                        <p>Posted by: <%= link_to paper.user.name, paper.user %> in <%= paper.subject_field %></p>
+                        <p>Posted by: <%= link_to paper.user.name, paper.user %> in <%= paper.subject.name %></p>
                         <a href="<%= paper.url %>">Stable URL: <%= paper.url %></a>
                         <!--<span><%= link_to 'Show', paper %></span>
                         <span><%= link_to 'Edit', edit_paper_path(paper) %></span>
@@ -35,7 +34,7 @@
     <% @newest_papers.each do |paper| %>
     <div class="span4">
         <h5><%= link_to paper.title, paper %></h5>
-        <p>Uploaded on <%= paper.created_at.strftime("%d %b. %Y") %> by <%= paper.user.name %> in <%= paper.subject_field%></p>
+        <p>Uploaded on <%= paper.created_at.strftime("%d-%m-%Y") %> by <%= paper.user.name %> in <%= paper.subject.name %></p>
     </div>
     <% end %>
 </div>

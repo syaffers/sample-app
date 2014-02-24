@@ -2,6 +2,7 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
     make_users
+    make_subjects
     make_papers
     make_relationships
   end
@@ -25,9 +26,19 @@ def make_papers
   users = User.all(limit: 6)
   4.times do |n|
     title = Faker::Lorem.sentence(6)
-    subject = Faker::Lorem.sentence(2)
     url = "http://example.com/paper/#{n+1}"
-    users.each { |user| user.papers.create!(title: title, url: url, subject_field: subject) }
+    subject = ((n+1)%4)+1
+    users.each { 
+      |user| user.papers.create!(title: title, url: url, subject_id: subject)
+    }
+  end
+end
+
+def make_subjects
+  # create 4 subjects
+  4.times do
+    name = Faker::Lorem.sentence(2)
+    Subject.create!(name: name)
   end
 end
 
