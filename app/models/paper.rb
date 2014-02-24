@@ -1,8 +1,9 @@
 class Paper < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 150 }
-  validates :subject_field, presence: true, length: { maximum: 100 }
+  validates :subject_id, presence: true
   
   belongs_to :user
+  belongs_to :subject
   
   def self.search(search)
     if search

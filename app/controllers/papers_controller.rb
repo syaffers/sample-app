@@ -1,5 +1,6 @@
 class PapersController < ApplicationController
-  before_action :set_paper, only: [:show, :edit, :update, :destroy]
+  before_action :set_paper, only: [:show]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /papers
   # GET /papers.json
@@ -11,6 +12,7 @@ class PapersController < ApplicationController
   # GET /papers/1
   # GET /papers/1.json
   def show
+    @paper = Paper.find(params[:id])
   end
 
   # GET /papers/new
@@ -63,13 +65,21 @@ class PapersController < ApplicationController
   end
   
   def browse
-    @papers = Paper.find(:all)
+    @subjects = Subject.find(:all, :order => "name ASC") #find by paper subject
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_paper
       @paper = Paper.find(params[:id])
+    end
+    
+    def correct_user
+      @paper = current_user.papers.find_by(id: params[:id])
+      if @paper.nil?
+        redirect_to root_url 
+        flash[:error] = "You have no permission to edit that paper"
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
