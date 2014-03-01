@@ -1,19 +1,37 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @paper.title %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @paper.url %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @paper.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_paper_path(@paper) %> |
-<%= link_to 'Back', papers_path %>
+<% provide :title, @paper.title %>
+<div class="row">
+    <div class="span12 paper-head">
+        <h3 class="title"><%= @paper.title %></h3>
+        <p class="submitted-by">
+            <strong>Submitted by:</strong>
+            <%= @paper.user.name %>
+        </p>
+        <p class="version">Version 1.0 (<%= @paper.created_at.strftime("%d-%m-%Y") %>)</p>
+    </div>
+    <div class="span12 comments">
+        <% if @paper.comments.any? %>
+            <% @paper.comments.each do |comment| %>
+                <p>
+                    <% if comment.user.nil? %>
+                        <strong>Anonymous:</strong>
+                    <% else %>
+                        <strong><%= comment.user.name %>:</strong>
+                    <% end %>
+                    <%= comment.content %>
+                    <% if !current_user.nil? %>
+                        <% if current_user.admin? && !current_user?(current_user) %>
+                            <span><%= link_to 'Delete', comment, method: :delete, data: { confirm: "Delete this comment?" }%></span>
+                        <% end %>
+                    <% end %>
+                </p>
+            <% end %>
+        <% else %>
+            <p>No comments posted for this paper</p>
+        <% end %>
+        <%= render "comments/form" %>
+    </div>
+    <div class="span12">
+        <%= link_to 'Edit', edit_paper_path(@paper) %> |
+        <%= link_to 'Back', papers_path %>
+    </div>
+</div>

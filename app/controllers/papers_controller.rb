@@ -6,13 +6,23 @@ class PapersController < ApplicationController
   # GET /papers.json
   def index
     @papers = Paper.search(params[:search])
-    @newest_papers = Paper.find(:all, :order => "created_at DESC", :limit => 3)
+    @newest_papers = Paper.all.order(:created_at).limit(3)
   end
 
   # GET /papers/1
   # GET /papers/1.json
   def show
     @paper = Paper.find(params[:id])
+    @user = current_user
+    
+    if !current_user.nil?
+      user_id = current_user.id
+    else
+      user_id = 0
+    end    
+    
+    @comment = Comment.find_by paper_id: @paper.id
+    @commenting = Comment.new( { :user_id => user_id, :paper_id => @paper.id } )
   end
 
   # GET /papers/new
@@ -22,6 +32,7 @@ class PapersController < ApplicationController
 
   # GET /papers/1/edit
   def edit
+    @user = User.find(@paper.user.id)
   end
 
   # POST /papers
@@ -67,6 +78,10 @@ class PapersController < ApplicationController
   def browse
     @subjects = Subject.find(:all, :order => "name ASC") #find by paper subject
   end
+  
+  def correct_user?(user)
+    user == current_user
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -78,12 +93,12 @@ class PapersController < ApplicationController
       @paper = current_user.papers.find_by(id: params[:id])
       if @paper.nil?
         redirect_to root_url 
-        flash[:error] = "You have no permission to edit that paper"
+        flash[:error] = "Unauthorized paper access"
       end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:title, :url, :user_id, :subject_field)
+      params.require(:paper).permit(:title, :url, :subject_field)
     end
 end

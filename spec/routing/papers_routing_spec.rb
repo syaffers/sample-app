@@ -30,6 +30,10 @@ describe PapersController do
     it "routes to #destroy" do
       delete("/papers/1").should route_to("papers#destroy", :id => "1")
     end
+    
+    it "routes to #browse_papers" do
+      delete("/papers/browse_paper").should route_to("papers#browse_paper")
+    end
 
   end
 end

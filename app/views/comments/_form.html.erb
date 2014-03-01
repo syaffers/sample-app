@@ -1,0 +1,8 @@
+<hr class="comment-separator">
+<%= form_for @commenting do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <%= f.text_area :content, placeholder: "Write a comment..." %>
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :paper_id %>
+    <%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>

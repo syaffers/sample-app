@@ -1,14 +1,16 @@
 Transpub::Application.routes.draw do
-  resources :papers
-
   resources :users do
     member do
       get :following, :followers
     end
   end
+  
+  resources :papers 
+  resources :comments
   resources :sessions, only: [:new, :create, :destroy]
-  resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
+  resources :subject_field, only: [:create, :destroy]
   #get "users/new"
   
   root "static_pages#home"

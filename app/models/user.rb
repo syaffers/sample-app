@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   before_create :create_remember_token
   
   # relations
-  has_many :microposts, dependent: :destroy
   has_many :papers, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
@@ -30,11 +30,6 @@ class User < ActiveRecord::Base
   
   def User.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
-  end
-  
-  def feed
-    # prototype 
-    Micropost.from_users_followed_by(self)
   end
   
   def following?(other_user)
