@@ -4,11 +4,16 @@
         <h3 class="title"><%= @paper.title %></h3>
         <p class="submitted-by">
             <strong>Submitted by:</strong>
-            <%= @paper.user.name %>
+            <%= link_to @paper.user.name, @paper.user %>
+        </p>
+        <p class="submitted-in">
+            <strong>Submitted in:</strong>
+            <%= @paper.subject.name %>
         </p>
         <p class="version">Version 1.0 (<%= @paper.created_at.strftime("%d-%m-%Y") %>)</p>
     </div>
     <div class="span12 comments">
+        <h4>Comments</h4>
         <% if @paper.comments.any? %>
             <% @paper.comments.each do |comment| %>
                 <p>
@@ -19,7 +24,7 @@
                     <% end %>
                     <%= comment.content %>
                     <% if !current_user.nil? %>
-                        <% if current_user.admin? && !current_user?(current_user) %>
+                        <% if current_user.admin? || comment_user?(comment) %>
                             <span><%= link_to 'Delete', comment, method: :delete, data: { confirm: "Delete this comment?" }%></span>
                         <% end %>
                     <% end %>

@@ -23,14 +23,16 @@ end
 
 def make_papers
   # create a paper for all users
-  prng = Random.new
-  users = User.all
-  title = Faker::Lorem.sentence(prng.rand(1..10))
-  url = "http://example.com/paper/#{prng.rand(1..100)}"
-  subject = prng.rand(1..4)
-  users.each { 
-    |user| user.papers.create!(title: title, url: url, subject_id: subject)
-  }
+  2.times do
+    prng = Random.new
+    users = User.all.limit(5)
+    title = Faker::Lorem.sentence(prng.rand(1..10))
+    url = "http://example.com/paper/#{prng.rand(1..100)}"
+    subject = prng.rand(1..4)
+    users.each { 
+      |user| user.papers.create!(title: title, url: url, subject_id: subject)
+    }
+  end
 end
 
 def make_subjects

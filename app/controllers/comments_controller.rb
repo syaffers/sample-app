@@ -1,12 +1,13 @@
 class CommentsController < ApplicationController
-  before_action :correct_user, only: [:destroy]
+  before_action :authorized_user, only: :destroy
+  
   
   def create
     @user = current_user
     @comment = Comment.new(paper_params)
     
     if @comment.save
-      flash[:notice] = "Comment was successfully posted"
+      flash[:success] = "Comment was successfully posted"
       redirect_to @comment.paper
     else
       flash[:error] = "Error creating comment: #{@comment.errors.full_messages}"
@@ -26,10 +27,15 @@ class CommentsController < ApplicationController
   
     def correct_user
       @comment = current_user.comments.find_by(id: params[:id])
-      if @comment.nil?
-        redirect_to root_url 
-        flash[:error] = "Unauthorized comment deletion"
-      end
+      false unless @comment
+    end
+    
+    def admin_user
+      current_user.admin?
+    end
+    
+    def authorized_user
+      admin_user || correct_user
     end
   
     # Never trust parameters from the scary internet, only allow the white list through.
