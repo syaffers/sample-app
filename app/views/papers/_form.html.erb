@@ -1,29 +1,17 @@
 <%= form_for(@paper) do |f| %>
-  <% if @paper.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@paper.errors.count, "error") %> prohibited this paper from being saved:</h2>
+    <%= render 'shared/error_messages', object: f.object %>
 
-      <ul>
-      <% @paper.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br>
+    <%= f.label :title, "Title of Paper", placeholder: "Example Title and the Rest" %>
     <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br>
+    
+    <%= f.label :url, "Paper URL" %>
     <%= f.text_field :url %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    
+    <% subject_array = Subject.all.map { |subj| [subj.name, subj.id] } %>
+    <%= f.label :subject_id, "Subject Field" %>
+    <%= f.select :subject_id, options_for_select(subject_array) %>
+    
+    <%= f.hidden_field :user_id %>
+    
+    <%= f.submit "Create", class: "btn btn-primary" %>
 <% end %>

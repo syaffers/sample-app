@@ -8,8 +8,6 @@
 					<li><%= link_to "Search Papers", search_papers_path %></li>
 					<% if signed_in? %>
 					   <li><%= link_to "Help", help_path %></li>
-					   <li><%= #link_to "Users", users_path 
-					   %></li>
 					   <li id="fat-menu" class="dropdown">
 					       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					           <%= current_user.name %> <b class="caret"></b>

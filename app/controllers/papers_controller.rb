@@ -1,7 +1,8 @@
 class PapersController < ApplicationController
-  before_action :set_paper, only: [:show]
+  before_action :signed_in_user, only: [:new, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
-
+  before_action :set_paper, only: [:show]
+  
   # GET /papers
   # GET /papers.json
   def index
@@ -27,7 +28,7 @@ class PapersController < ApplicationController
 
   # GET /papers/new
   def new
-    @paper = Paper.new
+    @paper = Paper.new( { :user_id => current_user.id } )
   end
 
   # GET /papers/1/edit
@@ -56,7 +57,7 @@ class PapersController < ApplicationController
   def update
     respond_to do |format|
       if @paper.update(paper_params)
-        format.html { redirect_to @paper, notice: 'Paper was successfully updated.' }
+        format.html { redirect_to @paper, notice: "Paper was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -70,7 +71,7 @@ class PapersController < ApplicationController
   def destroy
     @paper.destroy
     respond_to do |format|
-      format.html { redirect_to papers_url }
+      format.html { redirect_to user_path(@paper.user.id), notice: "Paper was successfully deleted." }
       format.json { head :no_content }
     end
   end
@@ -99,6 +100,6 @@ class PapersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:title, :url, :subject_field)
+      params.require(:paper).permit(:title, :url, :user_id, :subject_id)
     end
 end

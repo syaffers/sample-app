@@ -10,6 +10,9 @@
         <section>
             <%= render "shared/stats"%>
         </section>
+        <section class="new_paper">
+            <%= link_to "Upload a New Paper...", new_paper_path %>
+        </section>
     </aside>
     <div class="span8">
         <%= render "follow_form" if signed_in? %>
@@ -18,6 +21,9 @@
             <ol class="papers">
                 <%= render @papers %>
             </ol>
+        <% else %>
+            <h3>Papers (0)</h3>
+            <p>You have no papers published. <%= link_to "Upload one now!", new_paper_path %>
         <% end %>
     </div>
 </div>

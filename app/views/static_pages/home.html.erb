@@ -1,27 +1,16 @@
 <% if signed_in? %>
     <div class="row">
-        <aside class="span4">
-            <section>
-                <%= render 'shared/user_info' %>
-            </section>
-            <section>
-                <%= render 'shared/stats'%>
-            </section>
-            <section>
-                <%= #render 'shared/micropost_form' 
-                %>
-            </section>
-        </aside>
-        <div class="span8">
-            <h3>Papers</h3>
-            <%= #render 'shared/feed' 
-            %>
-            <div class="row">
-                <div class="span12">
-                    <h4>To be reviewed</h4>
-                </div>
-               
-            </div>
+        <div class="span12">
+            <h4>Papers to review</h3>
+            <% @papers.each do |p| %>
+                <%= link_to p.title, p %>
+            <% end %>
+        </div>
+        <div class="span12">
+            <h4>Papers you might like</h3>
+            <% @papers.each do |p| %>
+                <%= link_to p.title, p %>
+            <% end %>
         </div>
     </div>
 <% else %>

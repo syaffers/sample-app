@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
     if signed_in?
-
+      @papers = Paper.all
     end
     
   end
