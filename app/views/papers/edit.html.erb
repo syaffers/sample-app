@@ -1,6 +1,7 @@
-<h1>Editing paper</h1>
+<% provide :title, "Editing Paper #{@paper.title}" %>
+
+<h1>Editing <%= @paper.title %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @paper %> |
-<%= link_to 'Back', papers_path %>
+<%= link_to 'Show Paper', @paper %>

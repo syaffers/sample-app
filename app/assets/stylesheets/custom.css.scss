@@ -237,6 +237,10 @@ input {
   height: auto !important;
 }
 
+.text-area-large {
+  height: 400px;
+}
+
 #error_explanation {
   color: $red;
   ul {

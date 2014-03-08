@@ -1,0 +1,25 @@
+<% provide :title, "Reviewing #{@paper.title}" %>
+
+<h1>Reviewing <%= @paper.title %></h1>
+
+<div class="row">
+    <div class="span12">
+        <%= form_for @review, :html => { :multipart => true } do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+        
+            <%= f.label :content, "Insert review here:" %>
+            <%= f.text_area :content, class: "text-area-large" %>
+            
+            <%= f.radio_button :review_status, "0" %>
+            <%= f.label :review_status, "Changes Needed", :value => "0", :checked => true %>
+            <%= f.radio_button :review_status, "1" %>
+            <%= f.label :review_status, "Accept", :value => "1" %>
+            
+            <%= f.hidden_field :paper_id %>
+            <%= f.hidden_field :user_id %>
+            
+            <%= f.submit "Create Review", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+</div>
+

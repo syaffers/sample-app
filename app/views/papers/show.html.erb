@@ -10,12 +10,43 @@
             <strong>Submitted in:</strong>
             <%= @paper.subject.name %>
         </p>
-        <p class="version">Version 1 (<%= @paper.created_at.strftime("%d-%m-%Y") %>)</p>
+        <p class="version">
+            <strong>Version:</strong>
+            1 (<%= @paper.created_at.strftime("%d-%m-%Y") %>)
+            <% if !current_user.nil? %>
+                <% if @paper.user == current_user %>
+                    <%= link_to 'Update Paper', edit_paper_path(@paper) %>
+                <% end %>
+            <% end %>
+        </p>
     </div>
     <div class="span12 pdf-view">
-        <iframe src="https://docs.google.com/viewer?url=http://localhost:3000<%= @paper.pdf.url %>&embedded=true" width="65%" height="450" frameborder="0">
+        <iframe src="https://docs.google.com/viewer?url=http://localhost:3000<%= @paper.pdf.url %>&embedded=true" width="100%" height="450" frameborder="0">
             <p>Your browser does not support iframes.</p>
         </iframe>
+    </div>
+    <div class="span12 reviews">
+        <% if @paper.reviews.any? %>
+            <h4>Reviews (<%= @paper.reviews.count %>/3)</h4>
+            <% @paper.reviews.each do |review| %>
+                <p>
+                    <strong><%= review.user.name %>:</strong>
+                    <%= raw sanitize(simple_format(review.content), :tags => %w(br p) ) %>
+                    <% if !current_user.nil? %>
+                        <% if review_user?(@paper) %>
+                            <span><%= link_to 'Edit', edit_review_path(review) %></span>
+                        <% end %>
+                    <% end %>
+                </p>
+            <% end %>
+        <% else %>
+            <h4>Reviews</h4>
+            <p>This paper has not been reviewed.</p>
+        <% end %>
+        <% if !current_user.nil? && !paper_user?(@paper) %>
+            <p><em>Would you like to review this paper?</em>
+                <%= link_to 'Review now!', new_review_path(:paper_id => @paper.id) %></p>
+        <% end %>
     </div>
     <div class="span12 comments">
         <h4>Comments</h4>
@@ -39,9 +70,5 @@
             <p>No comments posted for this paper</p>
         <% end %>
         <%= render "comments/form" %>
-    </div>
-    <div class="span12">
-        <%= link_to 'Edit', edit_paper_path(@paper) %> |
-        <%= link_to 'Back', papers_path %>
     </div>
 </div>

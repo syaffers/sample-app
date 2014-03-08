@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140308064527) do
+ActiveRecord::Schema.define(version: 20140308143722) do
 
   create_table "comments", force: true do |t|
     t.text     "content",    limit: 255
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140308064527) do
     t.integer  "paper_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "review_status"
   end
 
   create_table "subjects", force: true do |t|
