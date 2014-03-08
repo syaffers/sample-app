@@ -1,5 +1,5 @@
 <% provide :title, @paper.title %>
-<div class="row">
+<div class="row show-paper">
     <div class="span12 paper-head">
         <h3 class="title"><%= @paper.title %></h3>
         <p class="submitted-by">
@@ -10,7 +10,12 @@
             <strong>Submitted in:</strong>
             <%= @paper.subject.name %>
         </p>
-        <p class="version">Version 1.0 (<%= @paper.created_at.strftime("%d-%m-%Y") %>)</p>
+        <p class="version">Version 1 (<%= @paper.created_at.strftime("%d-%m-%Y") %>)</p>
+    </div>
+    <div class="span12 pdf-view">
+        <iframe src="https://docs.google.com/viewer?url=http://localhost:3000<%= @paper.pdf.url %>&embedded=true" width="65%" height="450" frameborder="0">
+            <p>Your browser does not support iframes.</p>
+        </iframe>
     </div>
     <div class="span12 comments">
         <h4>Comments</h4>

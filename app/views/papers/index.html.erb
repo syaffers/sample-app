@@ -11,8 +11,8 @@
                 <% @papers.each do |paper| %>
                     <div class="paper">
                         <h5><%= link_to paper.title, paper %></h5>
-                        <p>Posted by: <%= link_to paper.user.name, paper.user %> in <%= paper.subject.name %></p>
-                        <a href="<%= paper.url %>">Stable URL: <%= paper.url %></a>
+                        <p><strong>Posted by: </strong><%= link_to paper.user.name, paper.user %> in <%= paper.subject.name %></p>
+                        <p><strong>Stable URL: </strong><%= link_to "http://localhost:3000#{paper.pdf.url}", paper.pdf.url %></p>
                         <!--<span><%= link_to 'Show', paper %></span>
                         <span><%= link_to 'Edit', edit_paper_path(paper) %></span>
                         <span><%= link_to 'Destroy', paper, method: :delete, data: { confirm: 'Are you sure?' } %></span>-->

@@ -4,10 +4,17 @@ class Paper < ActiveRecord::Base
   belongs_to :subject
   
   has_many :comments
+  has_many :reviews
+  
+  #file dependencies
+  has_attached_file :pdf,
+    :url => "/assets/:attachment/:id/:basename.:extension",
+    :path => ":rails_root/public/assets/pdfs/:id/:basename.:extension"
   
   #validations
   validates :title, presence: true, length: { maximum: 150 }
   validates :subject_id, presence: true
+  validates_attachment_content_type :pdf, :content_type => 'application/pdf'
   
   def self.search(search)
     if search

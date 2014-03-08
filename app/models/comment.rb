@@ -6,4 +6,5 @@ class Comment < ActiveRecord::Base
   #validations
   validates :content, presence: true
   validates :paper_id, presence: true
+  validates :user_id, presence: true
 end

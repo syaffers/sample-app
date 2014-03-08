@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authorized_user, only: :destroy
   
-  
   def create
     @user = current_user
     @comment = Comment.new(paper_params)

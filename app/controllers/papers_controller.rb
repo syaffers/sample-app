@@ -7,7 +7,7 @@ class PapersController < ApplicationController
   # GET /papers.json
   def index
     @papers = Paper.search(params[:search])
-    @newest_papers = Paper.all.order(:created_at).limit(3)
+    @newest_papers = Paper.all.order(:created_at).reverse_order.limit(3)
   end
 
   # GET /papers/1
@@ -100,6 +100,6 @@ class PapersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:title, :url, :user_id, :subject_id)
+      params.require(:paper).permit(:title, :user_id, :subject_id, :pdf)
     end
 end

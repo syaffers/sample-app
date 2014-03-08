@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140306022730) do
+ActiveRecord::Schema.define(version: 20140308064527) do
 
   create_table "comments", force: true do |t|
     t.text     "content",    limit: 255
@@ -23,11 +23,14 @@ ActiveRecord::Schema.define(version: 20140306022730) do
 
   create_table "papers", force: true do |t|
     t.string   "title"
-    t.string   "url"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "subject_id"
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
   end
 
   create_table "relationships", force: true do |t|

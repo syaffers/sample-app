@@ -7,6 +7,7 @@
 # Ignore bundler config.
 /.bundle
 /server-log.txt
+/public/assets/
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
