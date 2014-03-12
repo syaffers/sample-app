@@ -10,4 +10,10 @@ module PapersHelper
   def review_user?(review)
     review.user == current_user
   end
+  
+  def has_reviewed?(paper)
+    paper.reviews.each do |r|
+      r.user == current_user
+    end
+  end
 end

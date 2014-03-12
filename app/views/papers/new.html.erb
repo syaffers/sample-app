@@ -1,10 +1,27 @@
 <% provide :title, "Uploading a New Paper"%>
 
-<h1>New Paper</h1>
+<h1>Uploading a New Paper</h1>
 
 <div class="row">
     <div class="span12">
-        <%= render 'form' %>
+        <%= form_for @paper, :html => { :multipart => true } do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+        
+            <%= f.label :title, "Title of Paper", placeholder: "Example Title and the Rest" %>
+            <%= f.text_field :title %>
+            
+            <% subject_array = Subject.all.map { |subj| [subj.name, subj.id] } %>
+            <%= f.label :subject_id, "Subject Field" %>
+            <%= f.select :subject_id, options_for_select(subject_array) %>
+            
+            <%= f.label :pdf, "Upload Paper (PDF format only)"%>
+            <%= f.file_field :pdf %>
+            
+            <%= f.hidden_field :user_id %>
+            <%= f.hidden_field :version %>
+            
+            <%= f.submit "Create Paper", class: "btn btn-primary" %>
+        <% end %>
     </div>
 </div>
 

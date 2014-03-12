@@ -7,4 +7,7 @@ class Review < ActiveRecord::Base
   validates :content, presence: true
   validates :paper_id, presence: true
   validates :user_id, presence: true
+  validates :review_status, presence: true
+  
+  validates_associated :paper, :message => "No more reviews can be added for this paper"
 end

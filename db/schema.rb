@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140308143722) do
+ActiveRecord::Schema.define(version: 20140312021308) do
 
   create_table "comments", force: true do |t|
     t.text     "content",    limit: 255
@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(version: 20140308143722) do
     t.string   "pdf_content_type"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
+    t.integer  "review_limit",     default: 3
+    t.integer  "version",          default: 1
+    t.integer  "paper_status",     default: 0
   end
 
   create_table "relationships", force: true do |t|
@@ -50,7 +53,7 @@ ActiveRecord::Schema.define(version: 20140308143722) do
     t.integer  "paper_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "review_status"
+    t.integer  "review_status", default: 0
   end
 
   create_table "subjects", force: true do |t|

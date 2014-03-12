@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @papers = @user.papers
+    @reviews = @user.reviews
   end
   
   def create

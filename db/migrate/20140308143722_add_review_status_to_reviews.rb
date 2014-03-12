@@ -1,6 +1,6 @@
 class AddReviewStatusToReviews < ActiveRecord::Migration
   def up
-    add_column :reviews, :review_status, :integer
+    add_column :reviews, :review_status, :integer, default: 0
   end
   
   def down

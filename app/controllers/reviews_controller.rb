@@ -1,10 +1,14 @@
 class ReviewsController < ApplicationController
   before_action :signed_in_user, only: [:new, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :own_paper, only: [:new]
+  before_action :double_review, only: [:new]
+  before_action :review_limit, only: [:new]
   before_action :set_review, only: [:show]
   
   def create
     @user = current_user
-    @review = Review.new(paper_params)
+    @review = Review.new(review_params)
     
     if @review.save
       flash[:success] = "Review was successfully posted"
@@ -43,6 +47,18 @@ class ReviewsController < ApplicationController
     @review = Review.find(params[:id])
   end
   
+  def update
+    respond_to do |format|
+      if @review.update(review_params)
+        format.html { redirect_to @review, notice: "Review was successfully updated." }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @review.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
   private
     def set_review
       @review = Review.find(params[:id])
@@ -52,12 +68,40 @@ class ReviewsController < ApplicationController
       @review = current_user.reviews.find_by(id: params[:id])
       if @review.nil?
         redirect_to root_url 
-        flash[:error] = "Unauthorized access"
+        flash[:error] = "Unauthorized access."
+      end
+    end
+    
+    def review_limit
+      @paper = Paper.find(params[:paper_id])
+      if @paper.reviews.size >= 3
+        redirect_to paper_path(@paper)
+        flash[:error] = "No more reviews can be made for this paper."
+      end
+    end
+    
+    # users should not be able to review their own papers
+    def own_paper
+      @paper = Paper.find(params[:paper_id])
+      if @paper.user == current_user
+        redirect_to user_path(current_user)
+        flash[:error] = "You cannot review your own paper"
+      end
+    end
+    
+    # users shout not be able to put in more than one review to one paper
+    def double_review
+      @paper = Paper.find(params[:paper_id])
+      @paper.reviews.each do |r|
+        if r.user == current_user
+          redirect_to paper_path(@paper)
+          flash[:error] = "You have already made a review for this paper. Please edit the current review."
+        end
       end
     end
   
     # Never trust parameters from the scary internet, only allow the white list through.
-    def paper_params
+    def review_params
       params.require(:review).permit(:content, :paper_id, :user_id, :review_status)
     end
 end

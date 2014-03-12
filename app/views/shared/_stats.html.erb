@@ -2,22 +2,15 @@
 <div class="stats row">
     <a class="span3" href="<%= #following_user_path(@user) 
     %>">
-        <strong id="review" class="stat">0</strong>
-        papers to review
-    </a>
-    <a class="span3" href="<%= #followers_user_path(@user) 
-    %>">
-        <strong id="reviewed" class="stat">0</strong>
-        papers reviewed
+        0 papers to review
     </a>
     <a class="span3" href="#">
-        <strong id="uploaded">
-            <%= papers_count = @user.papers.count %>
-        </strong>
-        papers uploaded
+        <%= pluralize @reviews.count, "paper" %> reviewed
     </a>
     <a class="span3" href="#">
-        <strong id="published">0</strong>
-        papers published
+        <%= pluralize @papers.count, "paper" %> uploaded
+    </a>
+    <a class="span3" href="#">
+        0 papers published
     </a>
 </div>

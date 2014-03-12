@@ -2,6 +2,23 @@
 
 <h1>Editing <%= @paper.title %></h1>
 
-<%= render 'form' %>
+<%= form_for @paper, :html => { :multipart => true } do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.label :title, "Title of Paper", placeholder: "Example Title and the Rest" %>
+    <%= f.text_field :title %>
+    
+    <% subject_array = Subject.all.map { |subj| [subj.name, subj.id] } %>
+    <%= f.label :subject_id, "Subject Field" %>
+    <%= f.select :subject_id, options_for_select(subject_array) %>
+    
+    <%= f.label :pdf, "Upload Paper (PDF format only)"%>
+    <%= f.file_field :pdf %>
+    
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :version %>
+    
+    <%= f.submit "Update Paper", class: "btn btn-primary" %>
+<% end %>
 
 <%= link_to 'Show Paper', @paper %>

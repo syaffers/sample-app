@@ -28,12 +28,13 @@ class PapersController < ApplicationController
 
   # GET /papers/new
   def new
-    @paper = Paper.new( { :user_id => current_user.id } )
+    @paper = Paper.new( { :user_id => current_user.id, :version => 1 } )
   end
 
   # GET /papers/1/edit
   def edit
     @user = User.find(@paper.user.id)
+    @version = @paper.increment!(:version)
   end
 
   # POST /papers
@@ -100,6 +101,6 @@ class PapersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:title, :user_id, :subject_id, :pdf)
+      params.require(:paper).permit(:title, :user_id, :subject_id, :version, :pdf, :paper_status)
     end
 end

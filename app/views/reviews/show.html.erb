@@ -1,1 +1,17 @@
-<%= @review.content %>
+<h3>Review for <%= link_to @review.paper.title, @review.paper %> by <%= link_to @review.user.name, @review.user %></h3>
+<p>
+    <strong>Review status:</strong>
+    <% if @review.review_status == 0 %>
+        needs revision
+    <% else %>
+        accepted
+    <% end %>
+</p>
+<p>
+    <strong>Last updated:</strong>
+    <%= @review.updated_at %>
+</p>
+<%= raw sanitize(simple_format(@review.content), :tags => %w(br p) ) %>
+<p>
+    <%= link_to (raw "&#8592; Back to Paper"), @review.paper%>
+</p>

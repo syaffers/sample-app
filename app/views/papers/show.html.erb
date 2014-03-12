@@ -12,13 +12,26 @@
         </p>
         <p class="version">
             <strong>Version:</strong>
-            1 (<%= @paper.created_at.strftime("%d-%m-%Y") %>)
+            <%= @paper.version %> (<%= @paper.updated_at.strftime("%d-%m-%Y") %>)
             <% if !current_user.nil? %>
                 <% if @paper.user == current_user %>
                     <%= link_to 'Update Paper', edit_paper_path(@paper) %>
                 <% end %>
             <% end %>
         </p>
+        <p class="status">
+            <strong>Status:</strong>
+            <% status = 0 %>
+            <% @paper.reviews.each do |review| %>
+                <% status += review.review_status %>
+            <% end %>
+            <% if status >= 3 %>
+                Paper published
+            <% else %>
+                Paper under reviewing process
+            <% end %>
+        </p>
+        
     </div>
     <div class="span12 pdf-view">
         <iframe src="https://docs.google.com/viewer?url=http://localhost:3000<%= @paper.pdf.url %>&embedded=true" width="100%" height="450" frameborder="0">
@@ -27,26 +40,41 @@
     </div>
     <div class="span12 reviews">
         <% if @paper.reviews.any? %>
-            <h4>Reviews (<%= @paper.reviews.count %>/3)</h4>
+            <h4>Reviews</h4>
+            <ul>
+            <% rp = 0 %>
+            <% @review_exists_for_current_user = 0 %>
+            <% @review_count = @paper.reviews.size %>
             <% @paper.reviews.each do |review| %>
-                <p>
-                    <strong><%= review.user.name %>:</strong>
+                <% if current_user == review.user %>
+                    <% @review_exists_for_current_user += 1 %>
+                <% end %>
+                <% rp += review.review_status %>
+                <li>
+                    <strong><%= link_to review.user.name, review.user %>:</strong>
                     <%= raw sanitize(simple_format(review.content), :tags => %w(br p) ) %>
                     <% if !current_user.nil? %>
-                        <% if review_user?(@paper) %>
-                            <span><%= link_to 'Edit', edit_review_path(review) %></span>
+                        <p><%= link_to "Read more...", review %></p>
+                        <% if review_user?(review) %>
+                            <span><%= link_to 'Edit Review', edit_review_path(review) %></span>
                         <% end %>
                     <% end %>
-                </p>
+                </li>
             <% end %>
+            </ul>
         <% else %>
             <h4>Reviews</h4>
             <p>This paper has not been reviewed.</p>
         <% end %>
         <% if !current_user.nil? && !paper_user?(@paper) %>
-            <p><em>Would you like to review this paper?</em>
-                <%= link_to 'Review now!', new_review_path(:paper_id => @paper.id) %></p>
+            <% if @review_exist_for_current_user.nil? && !(@review_count >= 3) %>
+            <p>
+                <em>Would you like to review this paper?</em>
+                <%= link_to 'Review now!', new_review_path(:paper_id => @paper.id) %>
+            </p>
+            <% end %>
         <% end %>
+        <span class="review-points"><%= rp %>/3</span>
     </div>
     <div class="span12 comments">
         <h4>Comments</h4>
