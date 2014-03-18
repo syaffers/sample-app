@@ -48,6 +48,7 @@
     </div>
     <div class="span12 reviews">
         <% @rp = 0 %>
+        <% @review_count = 0 %>
         <% if @paper.reviews.any? %>
             <h4>Reviews</h4>
             <ul>
@@ -78,7 +79,7 @@
             <h4>Reviews</h4>
             <p>This paper has not been reviewed.</p>
         <% end %>
-        <% if !current_user.nil? && !paper_user?(@paper) && !@review_count.nil? %>
+        <% if !current_user.nil? && !paper_user?(@paper) %>
             <% if @review_exist_for_current_user.nil? && !(@review_count >= 3) %>
             <p>
                 <em>Would you like to review this paper?</em>
