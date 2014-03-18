@@ -254,6 +254,49 @@ input {
   }
 }
 
+/* reviews */
+.reviews {
+  ul {
+    margin-left: 0;
+    li {
+      padding: 4px 8px;
+      border-bottom: 2px solid #ddd;
+      list-style-type: none;
+    }
+    .change {
+      background-color: #fffccf
+    }
+    .accept {
+      background-color: #eaffcf
+    }
+  }
+}
+
+/* comments */
+.comments {
+  ul{
+    margin-left: 0;
+    li {
+      min-height: 50px;
+      padding: 4px 8px;
+      border-bottom: 2px solid #ddd;
+      list-style-type: none;
+      .comment-meta {
+        font-size: 0.9em;
+      }
+      .comment-content {
+        margin-left: 4px;
+      }
+    }
+  }
+  .odd {
+    background-color: #fafafa;
+  }
+  .even {
+    background-color: #f0f0f0;
+  }
+}
+
 /* misc */
 
 .debug_dump {

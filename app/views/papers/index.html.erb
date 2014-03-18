@@ -6,11 +6,11 @@
     </div>
     <div class="span12 search-results">
         <% if !params[:search].blank? %>
-            <h4 class="results-for">Search results for "<%= params[:search] %>"</h4>
+            <h4 class="results-for"><%= highlight("Search results for: #{params[:search]}", params[:search]) %></h4>
             <% if @papers.any? %>
                 <% @papers.each do |paper| %>
                     <div class="paper">
-                        <h5><%= link_to paper.title, paper %></h5>
+                        <h5><%= link_to(highlight(paper.title, params[:search]), paper) %></h5>
                         <p><strong>Posted by: </strong><%= link_to paper.user.name, paper.user %> in <%= paper.subject.name %></p>
                         <p><strong>Stable URL: </strong><%= link_to "http://localhost:3000#{paper.pdf.url}", paper.pdf.url %></p>
                         <!--<span><%= link_to 'Show', paper %></span>

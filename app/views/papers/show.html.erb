@@ -12,7 +12,15 @@
         </p>
         <p class="version">
             <strong>Version:</strong>
-            <%= @paper.version %> (<%= @paper.updated_at.strftime("%d-%m-%Y") %>)
+            <%= @paper.version %>
+                <em>
+                    <% if @paper.updated_at == @paper.created_at %>
+                        (created at
+                    <% else %>
+                        (updated at
+                    <% end %>
+                    <%= @paper.updated_at.strftime("%d-%m-%Y %H:%M:%S") %>)
+                </em>
             <% if !current_user.nil? %>
                 <% if @paper.user == current_user %>
                     <%= link_to 'Update Paper', edit_paper_path(@paper) %>
@@ -49,8 +57,12 @@
                 <% if current_user == review.user %>
                     <% @review_exists_for_current_user += 1 %>
                 <% end %>
+                <% status = "change" %>
                 <% rp += review.review_status %>
-                <li>
+                <% if review.review_status == 1 %>
+                    <% status = "accept" %>
+                <% end %>
+                <li class="<%= status %>">
                     <strong><%= link_to review.user.name, review.user %>:</strong>
                     <%= raw sanitize(simple_format(review.content), :tags => %w(br p) ) %>
                     <% if !current_user.nil? %>
@@ -79,21 +91,30 @@
     <div class="span12 comments">
         <h4>Comments</h4>
         <% if @paper.comments.any? %>
+            <ul>
             <% @paper.comments.each do |comment| %>
-                <p>
-                    <% if comment.user.nil? %>
-                        <strong>Anonymous:</strong>
-                    <% else %>
-                        <strong><%= comment.user.name %>:</strong>
-                    <% end %>
-                    <%= comment.content %>
-                    <% if !current_user.nil? %>
-                        <% if current_user.admin? || comment_user?(comment) %>
-                            <span><%= link_to 'Delete', comment, method: :delete, data: { confirm: "Delete this comment?" }%></span>
+                <li class="<%= cycle("odd", "even") %>">
+                    <span class="comment-meta">
+                        <% if comment.user.nil? %>
+                            <strong>Anonymous</strong>
+                        <% else %>
+                            <strong><%= link_to comment.user.name, comment.user %></strong>
                         <% end %>
-                    <% end %>
-                </p>
+                        <em>(at <%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %>)</em>:
+                    </span>
+                    <span class="comment-content">
+                        <p>
+                            <%= comment.content %>
+                        </p>
+                        <% if !current_user.nil? %>
+                            <% if current_user.admin? || comment_user?(comment) %>
+                                <span class="comment-edit-link"><%= link_to 'Delete', comment, method: :delete, data: { confirm: "Delete this comment?" }%></span>
+                            <% end %>
+                        <% end %>
+                    </span>
+                </li>
             <% end %>
+            </ul>
         <% else %>
             <p>No comments posted for this paper</p>
         <% end %>
