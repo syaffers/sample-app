@@ -42,15 +42,15 @@
         
     </div>
     <div class="span12 pdf-view">
-        <iframe src="https://docs.google.com/viewer?url=http://<%= request.domain %><%= @paper.pdf.url %>&embedded=true" width="100%" height="450" frameborder="0">
+        <iframe src="https://docs.google.com/viewer?url=http://localhost:3000<%= @paper.pdf.url %>&embedded=true" width="100%" height="450" frameborder="0">
             <p>Your browser does not support iframes.</p>
         </iframe>
     </div>
     <div class="span12 reviews">
+        <% @rp = 0 %>
         <% if @paper.reviews.any? %>
             <h4>Reviews</h4>
             <ul>
-            <% rp = 0 %>
             <% @review_exists_for_current_user = 0 %>
             <% @review_count = @paper.reviews.size %>
             <% @paper.reviews.each do |review| %>
@@ -58,7 +58,7 @@
                     <% @review_exists_for_current_user += 1 %>
                 <% end %>
                 <% status = "change" %>
-                <% rp += review.review_status %>
+                <% @rp += review.review_status %>
                 <% if review.review_status == 1 %>
                     <% status = "accept" %>
                 <% end %>
@@ -78,7 +78,7 @@
             <h4>Reviews</h4>
             <p>This paper has not been reviewed.</p>
         <% end %>
-        <% if !current_user.nil? && !paper_user?(@paper) %>
+        <% if !current_user.nil? && !paper_user?(@paper) && !@review_count.nil? %>
             <% if @review_exist_for_current_user.nil? && !(@review_count >= 3) %>
             <p>
                 <em>Would you like to review this paper?</em>
@@ -86,7 +86,7 @@
             </p>
             <% end %>
         <% end %>
-        <span class="review-points"><%= rp %>/3</span>
+        <span class="review-points"><%= @rp %>/3</span>
     </div>
     <div class="span12 comments">
         <h4>Comments</h4>
