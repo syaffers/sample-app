@@ -27,7 +27,6 @@ def make_papers
     prng = Random.new
     users = User.all.limit(5)
     title = Faker::Lorem.sentence(prng.rand(1..10))
-    url = "http://example.com/paper/#{prng.rand(1..100)}"
     subject = prng.rand(1..4)
     users.each { 
       |user| user.papers.create!(title: title, url: url, subject_id: subject)
