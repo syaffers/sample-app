@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140312021308) do
+ActiveRecord::Schema.define(version: 20140423112531) do
 
   create_table "comments", force: true do |t|
     t.text     "content",    limit: 255
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140312021308) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           default: false
+    t.boolean  "editor",          default: false
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"

@@ -1,10 +1,9 @@
 Transpub::Application.routes.draw do
   resources :users do
     member do
-      get :following, :followers
+      put 'update_status'
     end
-  end
-  
+  end  
   resources :papers 
   resources :comments
   resources :reviews

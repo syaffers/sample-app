@@ -49,14 +49,14 @@
     <div class="span12 reviews">
         <% @rp = 0 %>
         <% @review_count = 0 %>
+        <% @review_exists_for_current_user = 0 %>
         <% if @paper.reviews.any? %>
             <h4>Reviews</h4>
             <ul>
-            <% @review_exists_for_current_user = 0 %>
             <% @review_count = @paper.reviews.size %>
             <% @paper.reviews.each do |review| %>
                 <% if current_user == review.user %>
-                    <% @review_exists_for_current_user += 1 %>
+                    <% @review_exists_for_current_user = 1 %>
                 <% end %>
                 <% status = "change" %>
                 <% @rp += review.review_status %>
@@ -80,7 +80,7 @@
             <p>This paper has not been reviewed.</p>
         <% end %>
         <% if !current_user.nil? && !paper_user?(@paper) %>
-            <% if @review_exist_for_current_user.nil? && !(@review_count >= 3) %>
+            <% if @review_exist_for_current_user == 0 && !(@review_count >= 3) %>
             <p>
                 <em>Would you like to review this paper?</em>
                 <%= link_to 'Review now!', new_review_path(:paper_id => @paper.id) %>
