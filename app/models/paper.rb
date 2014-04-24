@@ -1,10 +1,13 @@
 class Paper < ActiveRecord::Base
+  include PublicActivity::Common
+    
   #relations
   belongs_to :user
   belongs_to :subject
   
   has_many :comments
   has_many :reviews
+  has_many :likes
   
   #file dependencies
   has_attached_file :pdf,

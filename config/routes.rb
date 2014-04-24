@@ -4,13 +4,14 @@ Transpub::Application.routes.draw do
       put 'update_status'
     end
   end  
+  resources :activities
   resources :papers 
   resources :comments
   resources :reviews
   resources :sessions, only: [:new, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
-  resources :subject_field, only: [:create, :destroy]
+  resources :subjects
   #get "users/new"
   
   root "static_pages#home"

@@ -1,4 +1,7 @@
 class Comment < ActiveRecord::Base
+  #include public activity tracker
+  include PublicActivity::Common
+  
   #relations
   belongs_to :user
   belongs_to :paper

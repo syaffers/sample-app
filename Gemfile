@@ -10,6 +10,9 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'rename'
 gem 'paperclip'
+#gem 'activerecord-reputation-system', github: 'NARKOZ/activerecord-reputation-system', branch: 'rails4', require: 'reputation_system'
+#gem 'aasm', '~>3.1.1'
+gem 'public_activity'
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do

@@ -1,0 +1,7 @@
+<% provide(:title, "Activities")%>
+<h1>Activities</h1>
+<% @activities.each do |activity| %>
+    <div class="activity">
+        <%= render_activity activity %>
+    </div>
+<% end %>

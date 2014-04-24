@@ -1,0 +1,14 @@
+<% provide(:title, "Edit Subject")%>
+<h1>Edit Subject</h1>
+<div class="row">
+    <div class="span12">
+        <%= form_for @subject, :html => { :multipart => true } do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+        
+            <%= f.label :name, "Name of Journal/Topic/Subject", placeholder: "Example Title" %>
+            <%= f.text_field :name %>
+            
+            <%= f.submit "Update Subject", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+</div>

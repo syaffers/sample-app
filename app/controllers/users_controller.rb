@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:edit, :update, :destroy]
+  before_action :admin_user, only: [:edit, :update, :destroy, :update_status]
   
   def index
     @users = User.paginate(page: params[:page])
@@ -15,6 +15,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @papers = @user.papers
     @reviews = @user.reviews
+    @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: current_user.id)
+    @ext_activities = PublicActivity::Activity.order("created_at desc").where()
   end
   
   def create
@@ -46,6 +48,7 @@ class UsersController < ApplicationController
   end
   
   def update_status
+    @user = User.find(params[:id])
     if @user.update_attributes(status_params)
       flash[:success] = "User updated"
       redirect_to @user

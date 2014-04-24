@@ -44,6 +44,7 @@ class PapersController < ApplicationController
 
     respond_to do |format|
       if @paper.save
+        @paper.create_activity :create, owner: current_user
         format.html { redirect_to @paper, notice: 'Paper was successfully created.' }
         format.json { render action: 'show', status: :created, location: @paper }
       else
@@ -58,6 +59,7 @@ class PapersController < ApplicationController
   def update
     respond_to do |format|
       if @paper.update(paper_params)
+        @paper.create_activity :update, owner: current_user
         format.html { redirect_to @paper, notice: "Paper was successfully updated." }
         format.json { head :no_content }
       else

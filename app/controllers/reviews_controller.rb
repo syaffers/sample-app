@@ -11,6 +11,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     
     if @review.save
+      @review.create_activity :create, owner: current_user, recipient: @review.paper.user
       flash[:success] = "Review was successfully posted"
       redirect_to @review.paper
     else
@@ -50,6 +51,7 @@ class ReviewsController < ApplicationController
   def update
     respond_to do |format|
       if @review.update(review_params)
+        @review.create_activity :update, owner: current_user, recipient: @review.paper.user
         format.html { redirect_to @review, notice: "Review was successfully updated." }
         format.json { head :no_content }
       else

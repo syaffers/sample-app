@@ -11,7 +11,25 @@
             <%= render "shared/stats"%>
         </section>
         <section class="new_paper">
-            <%= link_to "Upload a New Paper...", new_paper_path %>
+            <% if current_user?(@user) %>
+                <%= link_to "Upload a New Paper...", new_paper_path %>
+            <% end %>
+        </section>
+        <section>
+            <div class="activities">
+                <% if @activities.any? %>
+                    <h3>Activities</h3>
+                    <ul class="activity-list">
+                        <% @activities.each do |activity| %>
+                            <% if activity.trackable %>
+                                <li class="activity">
+                                    <%= activity.inspect %>
+                                </li>
+                            <% end %>
+                        <% end %>
+                    </ul>
+                <% end %>
+            </div>
         </section>
     </aside>
     <div class="span8">

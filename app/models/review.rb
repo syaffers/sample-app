@@ -1,4 +1,7 @@
 class Review < ActiveRecord::Base
+  #include tracking
+  include PublicActivity::Common
+
   #relations
   belongs_to :user
   belongs_to :paper
