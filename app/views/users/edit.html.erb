@@ -18,8 +18,17 @@
             <%= f.label :password %>
             <%= f.password_field :password %>
             
-            <%= f.label :password_confirmation, "Confirmation" %>
+            <%= f.label :password_confirmation, "Confirm Password" %>
             <%= f.password_field :password_confirmation %>
+            
+            <%= f.label :job_title %>
+            <%= f.text_field :job_title %>
+            
+            <%= f.label :institution %>
+            <%= f.text_field :institution %>
+            
+            <%= f.label :summary %>
+            <%= f.text_area :summary %>
             
             <%= f.submit "Save Changes", class: "btn btn-primary" %>
         <% end %>

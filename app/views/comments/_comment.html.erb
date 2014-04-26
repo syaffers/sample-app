@@ -1,0 +1,29 @@
+<h4>Comments</h4>
+<% if @paper.comments.any? %>
+    <ul>
+    <% @paper.comments.each do |comment| %>
+        <li class="<%= cycle("odd", "even") %>">
+            <span class="comment-meta">
+                <% if comment.user.nil? %>
+                    <strong>Anonymous</strong>
+                <% else %>
+                    <strong><%= link_to comment.user.name, comment.user %></strong>
+                <% end %>
+                <em>(at <%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %>)</em>:
+            </span>
+            <span class="comment-content">
+                <p>
+                    <%= comment.content %>
+                </p>
+                <% if signed_in? %>
+                    <% if current_user.admin? || comment_user?(comment) %>
+                        <span class="comment-edit-link"><%= link_to 'Delete', comment, method: :delete, data: { confirm: "Delete this comment?" }%></span>
+                    <% end %>
+                <% end %>
+            </span>
+        </li>
+    <% end %>
+    </ul>
+<% else %>
+    <p>No comments posted for this paper</p>
+<% end %>

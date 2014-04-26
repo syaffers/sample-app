@@ -1,0 +1,28 @@
+<h4>Reviews</h4>
+<% if @paper.reviews.any? %>   
+    <ul>
+    <% @paper.reviews.each do |review| %>
+        <li class="<%= review_status(review.review_status) %>">
+            <strong><%= link_to review.user.name, review.user %>:</strong>
+            <%= raw sanitize(simple_format(truncate(review.content, :length => 400)), :tags => %w(br p) ) %>
+            <% if signed_in? %>
+                <p><%= link_to "Read more...", review %></p>
+                <% if review_user?(review) %>
+                    <span><%= link_to 'Edit Review', edit_review_path(review) %></span>
+                <% end %>
+            <% end %>
+        </li>
+    <% end %>
+    </ul>
+<% else %>
+    <p>This paper has not been reviewed.</p>
+<% end %>
+<% if signed_in? && !paper_user?(@paper) %>
+    <% if !@paper.reviews.pluck(:user_id).include?(current_user.id) && (@paper.reviews.count < 3) %>
+    <p>
+        <em>Would you like to review this paper?</em>
+        <%= link_to 'Review now!', new_review_path(:paper_id => @paper.id) %>
+    </p>
+    <% end %>
+<% end %>
+<span class="review-points"><%= @paper.reviews.count if !@paper.reviews.nil? %>/3</span>

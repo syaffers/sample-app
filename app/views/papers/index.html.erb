@@ -10,12 +10,17 @@
             <% if @papers.any? %>
                 <% @papers.each do |paper| %>
                     <div class="paper">
-                        <h5><%= link_to(highlight(paper.title, params[:search]), paper) %></h5>
-                        <p><strong>Posted by: </strong><%= link_to paper.user.name, paper.user %> in <%= paper.subject.name %></p>
-                        <p><strong>Stable URL: </strong><%= link_to "http://#{request.domain}:#{request.port}#{paper.pdf.url}", paper.pdf.url %></p>
-                        <!--<span><%= link_to 'Show', paper %></span>
-                        <span><%= link_to 'Edit', edit_paper_path(paper) %></span>
-                        <span><%= link_to 'Destroy', paper, method: :delete, data: { confirm: 'Are you sure?' } %></span>-->
+                        <h5>
+                            <%= link_to(highlight(paper.title, params[:search]), paper) %>
+                        </h5>
+                        <p>
+                            <strong>Posted by: </strong>
+                            <%= link_to paper.user.name, paper.user %> in <%= paper.subject.name %>
+                        </p>
+                        <p>
+                            <strong>Stable URL: </strong>
+                            <%= link_to "http://#{request.domain}:#{request.port}#{paper.pdf.url}", paper.pdf.url %>
+                        </p>
                     </div>
                 <% end %>
             <% else %>
@@ -28,9 +33,26 @@
 <div class="row new-papers">
     <% @newest_papers.each do |paper| %>
     <div class="span4">
-        <h5><%= link_to paper.title, paper %></h5>
-        <p class="description">Uploaded on <%= paper.created_at.strftime("%d-%m-%Y") %> by <%= paper.user.name %> in <%= paper.subject.name %></p>
-        <p class="comments-count"><%= pluralize paper.comments.count, "comment" %></p>
+        <h5>
+            <%= link_to paper.title, paper %>
+        </h5>
+        <%= image_tag paper.pdf.url(:pdf_thumbnail), class: "snapshot", title: paper.title %>
+        <p class="description">
+            <% if paper.updated_at == paper.created_at %>
+                Uploaded on
+            <% else %>
+                Updated on
+            <% end %>
+            <%= paper.updated_at.to_formatted_s(:long) %>
+            by
+            <%= link_to paper.user.name, paper.user %>
+            in
+            <%= link_to paper.subject.name %></p>
+        <p class="paper-stats">
+            <span><%= pluralize paper.comments.count, "comment" %></span>, 
+            <span><%= pluralize paper.reviews.count, "review" %></span>,
+            <span><%= pluralize paper.upvotes.size - paper.downvotes.size, "like" %></span>
+        </p>
     </div>
     <% end %>
 </div>

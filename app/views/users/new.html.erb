@@ -13,13 +13,19 @@
             <%= f.label :email %>
             <%= f.text_field :email %>
             
+            <%= f.label :job_title %>
+            <%= f.text_field :job_title %>
+            
+            <%= f.label :institution %>
+            <%= f.text_field :institution %>
+            
             <%= f.label :password %>
             <%= f.password_field :password %>
             
             <%= f.label :password_confirmation, "Confirmation" %>
             <%= f.password_field :password_confirmation %>
             
-            <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+            <%= f.submit "Create my account", class: "btn btn-primary" %>
         <% end %>
     </div>   
 </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140424141426) do
+ActiveRecord::Schema.define(version: 20140426091247) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -38,12 +38,6 @@ ActiveRecord::Schema.define(version: 20140424141426) do
     t.integer  "paper_id"
   end
 
-  create_table "likes", force: true do |t|
-    t.integer  "count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "papers", force: true do |t|
     t.string   "title"
     t.integer  "user_id"
@@ -56,7 +50,7 @@ ActiveRecord::Schema.define(version: 20140424141426) do
     t.datetime "pdf_updated_at"
     t.integer  "review_limit",     default: 3
     t.integer  "version",          default: 1
-    t.integer  "paper_status",     default: 0
+    t.string   "state"
   end
 
   create_table "reviews", force: true do |t|
@@ -83,8 +77,26 @@ ActiveRecord::Schema.define(version: 20140424141426) do
     t.string   "remember_token"
     t.boolean  "admin",           default: false
     t.boolean  "editor",          default: false
+    t.string   "job_title",       default: ""
+    t.string   "institution",     default: ""
+    t.text     "summary",         default: ""
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+
+  create_table "votes", force: true do |t|
+    t.integer  "votable_id"
+    t.string   "votable_type"
+    t.integer  "voter_id"
+    t.string   "voter_type"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
 
 end

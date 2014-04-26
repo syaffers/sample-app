@@ -1,18 +1,34 @@
 class Paper < ActiveRecord::Base
+  include AASM  
+  acts_as_votable
   include PublicActivity::Common
     
   #relations
   belongs_to :user
   belongs_to :subject
   
-  has_many :comments
-  has_many :reviews
-  has_many :likes
+  has_many :comments, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :likes, dependent: :destroy
+
+  #paper states
+  aasm_column :state
+  aasm do
+    state :under_review, :initial => true
+    state :published
+  
+    event :publish do
+      transitions :from => :under_review, :to => :published
+    end
+  end
   
   #file dependencies
+  time = Time.now.to_formatted_s(:number)
   has_attached_file :pdf,
-    :url => "/assets/:attachment/:id/:basename.:extension",
-    :path => ":rails_root/public/assets/pdfs/:id/:basename.:extension"
+    :styles => { :pdf_thumbnail => ["200x283#", :png] },
+    :url => "/assets/:attachment/:id/:basename#{time}.:extension",
+    :path => ":rails_root/public/assets/pdfs/:id/:basename#{time}.:extension",
+    :keep_old_files => true
   
   #validations
   validates :title, presence: true, length: { maximum: 150 }

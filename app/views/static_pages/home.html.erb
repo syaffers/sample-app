@@ -2,14 +2,14 @@
     <div class="row">
         <div class="span12">
             <h4>Papers to review</h3>
-            <% @papers.each do |p| %>
-                <%= link_to p.title, p %>
+            <% @papers.each do |paper| %>
+                <%= link_to image_tag(paper.pdf.url(:pdf_thumbnail), class: "snapshot", title: paper.title), paper %>
             <% end %>
         </div>
         <div class="span12">
             <h4>Papers you might like</h3>
-            <% @papers.each do |p| %>
-                <%= link_to p.title, p %>
+            <% @papers.each do |paper| %>
+                 <%= link_to image_tag(paper.pdf.url(:pdf_thumbnail), class: "snapshot", title: paper.title), paper %>
             <% end %>
         </div>
     </div>

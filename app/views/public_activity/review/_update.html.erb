@@ -2,6 +2,7 @@
     <%= link_to activity.owner.name, activity.owner if activity.owner %>
     updated a review for 
     <%= link_to activity.trackable.paper.title, activity.trackable.paper %>
+    <%= activity.inspect %>
 <% else %>
 
 <% end %>

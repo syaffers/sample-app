@@ -1,0 +1,14 @@
+<div class="activities">
+    <% if @activities.any? %>
+        <h3>Activities</h3>
+        <ul class="activity-list">
+            <% @activities.each do |activity| %>
+                <% if activity.trackable %>
+                    <li class="activity">
+                        <%= render_activity activity %>
+                    </li>
+                <% end %>
+            <% end %>
+        </ul>
+    <% end %>
+</div>

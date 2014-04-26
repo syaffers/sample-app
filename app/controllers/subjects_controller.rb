@@ -1,5 +1,9 @@
 class SubjectsController < ApplicationController
-  before_action :editor_user, only: [:new, :edit, :update, :destroy]
+  before_action :editor_user, only: [:create, :edit, :update, :destroy]
+  
+  def show
+    @subject = subject.find(param[:id])
+  end
   
   def new
     @subject = Subject.new()

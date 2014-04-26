@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  acts_as_voter
+  
   # before filters
   before_save { email.downcase! }
   before_create :create_remember_token
@@ -18,6 +20,10 @@ class User < ActiveRecord::Base
                      uniqueness:  { case_sensitive: false } )
                                      
   validates( :password, length: { minimum: 6 }, :on => :create)
+  
+  validates( :job_title, presence: true )
+  
+  validates( :institution, presence: true )
                                      
   has_secure_password
   

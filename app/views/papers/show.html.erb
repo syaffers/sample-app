@@ -1,7 +1,12 @@
 <% provide :title, @paper.title %>
 <div class="row show-paper">
     <h3 class="title"><%= @paper.title %></h3>
-    <div class="span9 pdf-view">
+    <div class="span1">
+        <div class="likes">
+            <%= render "vote" %>
+        </div>
+    </div>
+    <div class="span8 pdf-view">
         <iframe src="https://docs.google.com/viewer?url=http://localhost:3000<%= @paper.pdf.url %>&embedded=true" width="100%" height="450" frameborder="0">
             <p>Your browser does not support iframes.</p>
         </iframe>
@@ -34,94 +39,22 @@
         </p>
         <p class="status">
             <strong>Status:</strong>
-            <% status = 0 %>
-            <% @paper.reviews.each do |review| %>
-                <% status += review.review_status %>
-            <% end %>
-            <% if status >= 3 %>
+            <% if @paper.published? %>
                 Paper published
             <% else %>
                 Paper under reviewing process
+                <% if accepted_reviews_for(@paper) >= 3 && paper_user?(@paper)%>
+                    <%= link_to "Publish this paper", publish_paper_path(@paper), class: "publish", method: :put %>
+                <% end %>
             <% end %>
         </p>
-        
-    </div>
-    <div class="span12 likes">
-        <%= %>
+                
     </div>
     <div class="span12 reviews">
-        <% @rp = 0 %>
-        <% @review_count = 0 %>
-        <% @review_exists_for_current_user = 0 %>
-        <% if @paper.reviews.any? %>
-            <h4>Reviews</h4>
-            <ul>
-            <% @review_count = @paper.reviews.size %>
-            <% @paper.reviews.each do |review| %>
-                <% if current_user == review.user %>
-                    <% @review_exists_for_current_user = 1 %>
-                <% end %>
-                <% status = "change" %>
-                <% @rp += review.review_status %>
-                <% if review.review_status == 1 %>
-                    <% status = "accept" %>
-                <% end %>
-                <li class="<%= status %>">
-                    <strong><%= link_to review.user.name, review.user %>:</strong>
-                    <%= raw sanitize(simple_format(review.content), :tags => %w(br p) ) %>
-                    <% if !current_user.nil? %>
-                        <p><%= link_to "Read more...", review %></p>
-                        <% if review_user?(review) %>
-                            <span><%= link_to 'Edit Review', edit_review_path(review) %></span>
-                        <% end %>
-                    <% end %>
-                </li>
-            <% end %>
-            </ul>
-        <% else %>
-            <h4>Reviews</h4>
-            <p>This paper has not been reviewed.</p>
-        <% end %>
-        <% if !current_user.nil? && !paper_user?(@paper) %>
-            <% if @review_exist_for_current_user == 0 && !(@review_count >= 3) %>
-            <p>
-                <em>Would you like to review this paper?</em>
-                <%= link_to 'Review now!', new_review_path(:paper_id => @paper.id) %>
-            </p>
-            <% end %>
-        <% end %>
-        <span class="review-points"><%= @rp %>/3</span>
+        <%= render "reviews/review" %>
     </div>
     <div class="span12 comments">
-        <h4>Comments</h4>
-        <% if @paper.comments.any? %>
-            <ul>
-            <% @paper.comments.each do |comment| %>
-                <li class="<%= cycle("odd", "even") %>">
-                    <span class="comment-meta">
-                        <% if comment.user.nil? %>
-                            <strong>Anonymous</strong>
-                        <% else %>
-                            <strong><%= link_to comment.user.name, comment.user %></strong>
-                        <% end %>
-                        <em>(at <%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %>)</em>:
-                    </span>
-                    <span class="comment-content">
-                        <p>
-                            <%= comment.content %>
-                        </p>
-                        <% if !current_user.nil? %>
-                            <% if current_user.admin? || comment_user?(comment) %>
-                                <span class="comment-edit-link"><%= link_to 'Delete', comment, method: :delete, data: { confirm: "Delete this comment?" }%></span>
-                            <% end %>
-                        <% end %>
-                    </span>
-                </li>
-            <% end %>
-            </ul>
-        <% else %>
-            <p>No comments posted for this paper</p>
-        <% end %>
+        <%= render "comments/comment" %>
         <%= render "comments/form" %>
     </div>
 </div>

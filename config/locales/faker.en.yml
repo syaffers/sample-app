@@ -1,0 +1,4 @@
+en:
+  faker:
+    academic:
+      rank: [Professor, Assistant Professor, Senior Research Fellow, Dean of Faculty, Associate Professor, Lecturer, Research Associate, Research Professor, Professor Emeritus, Clinical Professor, Instructor]

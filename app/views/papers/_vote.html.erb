@@ -1,0 +1,19 @@
+<% if signed_in? %>    
+    <% if current_user.voted_up_for? @paper %>
+        <span class="vote upvoted" href="#" title="You voted up"><%= raw "&#x25B2;" %></span>
+    <% else %>
+        <%= link_to (raw "&#x25B2;"), upvote_paper_path(@paper), class: "vote upvote", title: "Vote up", method: :put %>
+    <% end %>
+    
+    <span class="likes-count"><%= (@paper.upvotes.size - @paper.downvotes.size) if !nil? %></span>
+    
+    <% if current_user.voted_down_for? @paper %>
+        <span class="vote downvoted" title="You voted down"><%= raw "&#x25BC;" %></span>
+    <% else %>
+        <%= link_to (raw "&#x25BC;"), downvote_paper_path(@paper), class: "vote downvote", title: "Vote down", method: :put %>
+    <% end %>
+<% else %>
+    <%= link_to (raw "&#x25B2;"), upvote_paper_path(@paper), class: "vote upvote", title: "Vote up", method: :put %>
+    <span class="likes-count"><%= (@paper.upvotes.size - @paper.downvotes.size) if !nil? %></span>
+    <%= link_to (raw "&#x25BC;"), downvote_paper_path(@paper), class: "vote downvote", title: "Vote down", method: :put %>
+<% end %>

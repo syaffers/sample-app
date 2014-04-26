@@ -16,4 +16,16 @@ module PapersHelper
       r.user == current_user
     end
   end
+  
+  def review_status(status)
+    if status == 1
+      "accept"
+    else 
+      "change"
+    end
+  end
+  
+  def accepted_reviews_for(paper)
+    paper.reviews.sum("review_status")
+  end
 end

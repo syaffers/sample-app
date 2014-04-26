@@ -1,7 +1,8 @@
 <% if activity.trackable %>
     <%= link_to activity.owner.name, activity.owner if activity.owner %>
-    updated
+    voted
     <%= link_to activity.trackable.title, activity.trackable %>
+    up
     <%= activity.inspect %>
 <% else %>
 

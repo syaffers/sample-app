@@ -1,11 +1,9 @@
 <% provide(:title, "All Users") %>
 <h1>All Users</h1>
 
-<%= will_paginate %>
+<%= alphabetical_paginate @alphaParams %>
 
 <ul class="users">
     <%= # renders all users using the _user.html.erb template  
     render @users %>
 </ul>
-
-<%= will_paginate %>

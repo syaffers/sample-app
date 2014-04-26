@@ -6,18 +6,8 @@ class ReviewsController < ApplicationController
   before_action :review_limit, only: [:new]
   before_action :set_review, only: [:show]
   
-  def create
-    @user = current_user
-    @review = Review.new(review_params)
-    
-    if @review.save
-      @review.create_activity :create, owner: current_user, recipient: @review.paper.user
-      flash[:success] = "Review was successfully posted"
-      redirect_to @review.paper
-    else
-      flash[:error] = "Error creating review: #{@review.errors.full_messages}"
-      redirect_to @review.paper
-    end
+  def show
+    @review = Review.find(params[:id])
   end
   
   def new
@@ -26,26 +16,24 @@ class ReviewsController < ApplicationController
     @review = Review.new({:paper_id => @paper.id, :user_id => @user.id})
   end
   
+  def create
+    @user = current_user
+    @review = Review.new(review_params)
+    
+    if @review.save
+      @review.create_activity :create, owner: current_user, recipient: @review.paper.user
+      flash[:success] = "Review was successfully posted"
+      redirect_to @review
+    else
+      flash[:error] = "Error creating review: #{@review.errors.full_messages}"
+      redirect_to @review
+    end
+  end
+  
   def edit
     @review = Review.find(params[:id])
     @user = current_user
     @paper = Paper.find(@review.paper.id)
-  end
-  
-  def show
-    @review = Review.find(params[:id])
-  end
-  
-  def destroy
-    @review = Review.find(params[:id])
-    @review.destroy
-    
-    flash[:success] = "Review removed"
-    redirect_to @review.paper
-  end
-  
-  def show
-    @review = Review.find(params[:id])
   end
   
   def update
@@ -61,11 +49,15 @@ class ReviewsController < ApplicationController
     end
   end
   
-  private
-    def set_review
-      @review = Review.find(params[:id])
-    end
-     
+  def destroy
+    @review = Review.find(params[:id])
+    @review.destroy
+    
+    flash[:success] = "Review removed"
+    redirect_to @review.paper
+  end
+  
+  private     
     def correct_user
       @review = current_user.reviews.find_by(id: params[:id])
       if @review.nil?

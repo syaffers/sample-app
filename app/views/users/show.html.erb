@@ -6,6 +6,28 @@
                 <%= gravatar_for @user %>
                 <%= @user.name %>
             </h1>
+            <p>
+                <%= @user.job_title %>
+                at 
+                <%= @user.institution %>
+            </p>
+            <p>
+                <strong>Email:</strong>
+                <%= mail_to @user.email %>
+            </p>
+            <p>
+                <strong>Summary:</strong>
+                <% if @user.summary.empty? %>
+                    <em>No summary written.</em>
+                    <% if !current_user.nil? %>
+                        <% if current_user?(@user) %>
+                            <%= link_to "Write a summary.", edit_user_path(@user) %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <%= @user.summary %>
+                <% end %>
+            </p>
         </section>
         <section>
             <%= render "shared/stats"%>
@@ -16,20 +38,7 @@
             <% end %>
         </section>
         <section>
-            <div class="activities">
-                <% if @activities.any? %>
-                    <h3>Activities</h3>
-                    <ul class="activity-list">
-                        <% @activities.each do |activity| %>
-                            <% if activity.trackable %>
-                                <li class="activity">
-                                    <%= activity.inspect %>
-                                </li>
-                            <% end %>
-                        <% end %>
-                    </ul>
-                <% end %>
-            </div>
+            <%= render "activity" %>
         </section>
     </aside>
     <div class="span8">
@@ -40,7 +49,13 @@
             </ol>
         <% else %>
             <h3>Papers (0)</h3>
-            <p>You have no papers published. <%= link_to "Upload one now!", new_paper_path %>
+            <% if !current_user.nil? %>
+                <% if current_user?(@user)%>
+                    <p>You have no papers published. <%= link_to "Upload one now!", new_paper_path %>
+                <% end %>
+            <% else %>
+                <p><%= @user.name %> has not published any papers.</p>
+            <% end %>
         <% end %>
     </div>
 </div>

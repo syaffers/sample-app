@@ -4,7 +4,7 @@ module ApplicationHelper
   def full_title( page_title )
     base_title = "TransPub"
     if page_title.empty?
-      base_title
+      "#{base_title} - Publish your papers for free transparently!"
     else
       "#{base_title} | #{page_title}"
     end

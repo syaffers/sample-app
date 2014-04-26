@@ -154,6 +154,49 @@ aside {
   }
 }
 
+.likes {
+  .vote {
+    padding-top: 10px;
+    font-size: 4em;
+    display: block;
+    width: 60px;
+    height: 40px;
+    font-weight: bold;
+    text-align: center;
+    color: #aaa;
+    text-decoration: none;
+  }
+  .upvote {
+    &:hover {
+      color: #2ecc71;
+    }
+  }
+  .downvote {
+    &:hover {
+      color: #e74c3c;
+    }
+  }
+  .upvoted {
+    color: #2ecc71;
+  }
+  .downvoted {
+    color: #e74c3c;
+  }
+  .likes-count {
+    font-size: 2em;
+    display: block;
+    width: 60px;
+    text-align: center;
+    font-weight: 700;
+    padding: 0;
+  }
+}
+
+/* snapshot of paper */
+.snapshot {
+  box-shadow: 4px 4px 6px #aaa;
+}
+
 /* users page */
 
 .users, .subjects {

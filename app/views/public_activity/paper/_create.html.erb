@@ -1,7 +1,9 @@
 <% if activity.trackable %>
     <%= link_to activity.owner.name, activity.owner if activity.owner %>
-    added a paper in 
-    <%= activity.trackable.paper.subject %>
+    added a paper:
+    <%= link_to activity.trackable.title, activity.trackable %>
+    in 
+    <%= activity.trackable.subject.name %>
 <% else %>
 
 <% end %>

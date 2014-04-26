@@ -1,7 +1,7 @@
-class PapersController < ApplicationController
-  before_action :signed_in_user, only: [:new, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update, :destroy]
-  before_action :set_paper, only: [:show]
+class PapersController < ApplicationController 
+  before_action :signed_in_user, only: [:new, :edit, :update, :destroy, :upvote, :downvote, :publish]
+  before_action :enough_accepts, only: [:publish]
+  before_action :correct_user, only: [:edit, :update, :destroy, :publish]
   
   # GET /papers
   # GET /papers.json
@@ -34,7 +34,7 @@ class PapersController < ApplicationController
   # GET /papers/1/edit
   def edit
     @user = User.find(@paper.user.id)
-    @version = @paper.increment!(:version)
+    @version = @paper.version + 1
   end
 
   # POST /papers
@@ -83,16 +83,42 @@ class PapersController < ApplicationController
     @subjects = Subject.find(:all, :order => "name ASC") #find by paper subject
   end
   
+  # Upvote and downvote funcitonality
+  def upvote
+    @paper = Paper.find(params[:id])
+    @paper.create_activity key: 'paper.upvoted', owner: current_user, recipient: @paper.user
+    @paper.upvote_from current_user
+    flash[:success] = "Successfully upvoted"
+    redirect_to @paper
+  end
+  
+  def downvote
+    @paper = Paper.find(params[:id])
+    @paper.create_activity key: 'paper.downvoted', owner: current_user, recipient: @paper.user
+    @paper.downvote_from current_user
+    flash[:success] = "Successfully downvoted"
+    redirect_to @paper
+  end
+  
+  # Publishing
+  def publish
+    @paper = Paper.find(params[:id])
+    if @paper.reviews.sum("review_status") >= 3
+      @paper.create_activity key: 'paper.published', owner: current_user
+      @paper.publish
+        if @paper.save
+          flash[:success] = "Paper successfully published"
+        end
+    end
+    redirect_to @paper
+  end
+  
   def correct_user?(user)
     user == current_user
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_paper
-      @paper = Paper.find(params[:id])
-    end
-    
+    # Use callbacks to share common setup or constraints between actions.    
     def correct_user
       @paper = current_user.papers.find_by(id: params[:id])
       if @paper.nil?
@@ -100,7 +126,12 @@ class PapersController < ApplicationController
         flash[:error] = "Unauthorized paper access"
       end
     end
-
+    
+    def enough_accepts
+      @paper = Paper.find(params[:id])
+      redirect_to @paper unless @paper.reviews.sum('review_status') >= 3
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
       params.require(:paper).permit(:title, :user_id, :subject_id, :version, :pdf, :paper_status)

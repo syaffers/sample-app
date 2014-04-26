@@ -5,7 +5,13 @@ Transpub::Application.routes.draw do
     end
   end  
   resources :activities
-  resources :papers 
+  resources :papers do
+    member do
+      put 'upvote', to: "papers#upvote"
+      put 'downvote', to: "papers#downvote"
+      put 'publish', to: "papers#publish"
+    end
+  end
   resources :comments
   resources :reviews
   resources :sessions, only: [:new, :create, :destroy]
