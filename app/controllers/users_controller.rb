@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(user_create_params)
+    @user = User.new(user_params)
     if @user.save
       # go to user page
       sign_in @user
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   
   def update
     # old implementation: @user = User.find(params[:id])
-    if @user.update_attributes(user_update_params)
+    if @user.update_attributes(user_params)
       # Handle successful update
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -65,12 +65,8 @@ class UsersController < ApplicationController
   
   private
   
-    def user_create_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :job_title, :institution)
-    end
-    
-    def user_update_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :job_title, :institution, :summary)
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :job_title, :institution, :summary, :tag_list)
     end
     
     def status_params

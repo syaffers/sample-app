@@ -100,6 +100,11 @@ class PapersController < ApplicationController
     redirect_to @paper
   end
   
+  def change_reviewer
+    @paper = Paper.find(params[:id])
+    @matching_users = match_users(User.all, @paper)
+  end
+  
   # Publishing
   def publish
     @paper = Paper.find(params[:id])
@@ -127,6 +132,18 @@ class PapersController < ApplicationController
       end
     end
     
+    # match users to paper
+    def match_users(users, paper)
+      matching_users = []
+      users.each do |user|
+        matching_tags = paper.tag_list & user.tag_list
+        if matching_tags.count.to_f / paper.tag_list.count > 0.5
+          matching_users << user
+        end
+      end
+      return matching_users
+    end
+    
     def enough_accepts
       @paper = Paper.find(params[:id])
       redirect_to @paper unless @paper.reviews.sum('review_status') >= 3
@@ -134,6 +151,6 @@ class PapersController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:title, :user_id, :subject_id, :version, :pdf, :paper_status)
+      params.require(:paper).permit(:title, :user_id, :subject_id, :version, :pdf, :ifile1, :ifile2, :sfile, :vfile, :paper_status, :tag_list)
     end
 end

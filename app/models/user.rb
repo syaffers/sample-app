@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_voter
+  acts_as_taggable
   
   # before filters
   before_save { email.downcase! }
@@ -9,7 +10,6 @@ class User < ActiveRecord::Base
   has_many :papers, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_many :likes, dependent: :destroy
   
   # validations
   validates( :name, presence: true, length: { maximum: 50 } )

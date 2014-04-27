@@ -1,6 +1,6 @@
 <div class="activities">
+    <h3>Activities</h3>
     <% if @activities.any? %>
-        <h3>Activities</h3>
         <ul class="activity-list">
             <% @activities.each do |activity| %>
                 <% if activity.trackable %>
@@ -10,5 +10,7 @@
                 <% end %>
             <% end %>
         </ul>
+    <% else %>
+    No activities yet.
     <% end %>
 </div>

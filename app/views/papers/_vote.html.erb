@@ -1,19 +1,32 @@
-<% if signed_in? %>    
+<% if signed_in? %>
     <% if current_user.voted_up_for? @paper %>
-        <span class="vote upvoted" href="#" title="You voted up"><%= raw "&#x25B2;" %></span>
+        <span class="vote upvoted" href="#" title="You voted up">
+            <%= @paper.upvotes.size %><%= raw "&#x25B2;" %>
+        </span>
+        
     <% else %>
-        <%= link_to (raw "&#x25B2;"), upvote_paper_path(@paper), class: "vote upvote", title: "Vote up", method: :put %>
+        <span class="vote">
+            <%= @paper.upvotes.size %><%= link_to (raw "&#x25B2;"), upvote_paper_path(@paper), class: "upvote", title: "Vote up", method: :put %>
+        </span>
     <% end %>
-    
-    <span class="likes-count"><%= (@paper.upvotes.size - @paper.downvotes.size) if !nil? %></span>
     
     <% if current_user.voted_down_for? @paper %>
-        <span class="vote downvoted" title="You voted down"><%= raw "&#x25BC;" %></span>
+        <span class="vote downvoted" title="You voted down">
+            <%= @paper.downvotes.size %><%= raw "&#x25BC;" %>
+        </span>
     <% else %>
-        <%= link_to (raw "&#x25BC;"), downvote_paper_path(@paper), class: "vote downvote", title: "Vote down", method: :put %>
+    
+        <span class="vote">
+            <%= @paper.downvotes.size %><%= link_to (raw "&#x25BC;"), downvote_paper_path(@paper), class: "downvote", title: "Vote down", method: :put %>
+        </span>
     <% end %>
+    
 <% else %>
-    <%= link_to (raw "&#x25B2;"), upvote_paper_path(@paper), class: "vote upvote", title: "Vote up", method: :put %>
-    <span class="likes-count"><%= (@paper.upvotes.size - @paper.downvotes.size) if !nil? %></span>
-    <%= link_to (raw "&#x25BC;"), downvote_paper_path(@paper), class: "vote downvote", title: "Vote down", method: :put %>
+    <span class="vote">
+        <%= @paper.upvotes.size %><%= link_to (raw "&#x25B2;"), upvote_paper_path(@paper), class: "upvote", title: "Vote up", method: :put %>
+    </span>
+    
+    <span class="vote">
+        <%= @paper.downvotes.size %><%= link_to (raw "&#x25BC;"), downvote_paper_path(@paper), class: "downvote", title: "Vote down", method: :put %>
+    </span>
 <% end %>

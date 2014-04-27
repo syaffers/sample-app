@@ -1,16 +1,16 @@
 <% if signed_in? %>
     <div class="row">
         <div class="span12">
-            <h4>Papers to review</h3>
-            <% @papers.each do |paper| %>
-                <%= link_to image_tag(paper.pdf.url(:pdf_thumbnail), class: "snapshot", title: paper.title), paper %>
-            <% end %>
+            <h4>Papers to review</h4>
+            <div class="row">
+                <%= render "papers/to_review_papers" %>
+            </div>
         </div>
         <div class="span12">
             <h4>Papers you might like</h3>
-            <% @papers.each do |paper| %>
-                 <%= link_to image_tag(paper.pdf.url(:pdf_thumbnail), class: "snapshot", title: paper.title), paper %>
-            <% end %>
+            <div class="row">
+                <%= render "papers/similar_papers" %>
+            </div>
         </div>
     </div>
 <% else %>
@@ -18,9 +18,9 @@
 	<h1>TransPub</h1>
 	
 	<h2>
-		Lorem ipsum dolor sit amet, 
-		<a href="#">consectetur adipiscing elit.</a>
-		Morbi elementum vestibulum mi quis bibendum.
+		Get your academic papers published with crowd-sourced peer reviews by 
+		<a href="#">professionals and researchers.</a>
+		Get a free account today and start publishing.
 	</h2>
 	
 	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>

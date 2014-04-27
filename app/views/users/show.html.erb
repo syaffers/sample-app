@@ -7,6 +7,12 @@
                 <%= @user.name %>
             </h1>
             <p>
+                <strong><%= "Member" if !(@user.editor || @user.admin) %></strong>
+            </p>
+            <p>
+                <strong><%= "Admin, " if @user.admin %><%= "Editor" if @user.editor %></strong>
+            </p>
+            <p>
                 <%= @user.job_title %>
                 at 
                 <%= @user.institution %>
@@ -28,14 +34,20 @@
                     <%= @user.summary %>
                 <% end %>
             </p>
+            <p>
+                <strong>Interest tags:</strong>
+                <% if @user.tag_list.empty? %>
+                    <em>none</em>
+                    <% if signed_in? && @user == current_user %>
+                        <%= link_to "Add some tags", edit_user_path(@user) %>
+                    <% end %>
+                <% else %>
+                    <%= @user.tag_list %>
+                <% end %>
+            </p>
         </section>
         <section>
             <%= render "shared/stats"%>
-        </section>
-        <section class="new_paper">
-            <% if current_user?(@user) %>
-                <%= link_to "Upload a New Paper...", new_paper_path %>
-            <% end %>
         </section>
         <section>
             <%= render "activity" %>
@@ -49,7 +61,7 @@
             </ol>
         <% else %>
             <h3>Papers (0)</h3>
-            <% if !current_user.nil? %>
+            <% if signed_in? %>
                 <% if current_user?(@user)%>
                     <p>You have no papers published. <%= link_to "Upload one now!", new_paper_path %>
                 <% end %>

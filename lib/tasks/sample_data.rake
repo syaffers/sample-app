@@ -16,10 +16,16 @@ def make_users
     name = Faker::Name.name
     company = "University of #{Faker::Address.city}"
     rank = Faker::Academic.rank
+    
+    tags = []
+    while tags.size < 6
+      tags << Faker::Academic.tag
+    end
+    
     email = "user#{n+1}@example.com"
     password = "password123"
     editor = n%2
-    User.create!( name: name, email: email, password: password, password_confirmation: password, institution: company, job_title: rank, editor: editor )
+    User.create!( name: name, email: email, password: password, password_confirmation: password, institution: company, job_title: rank, editor: editor, tag_list: tags )
   end
 end
 
@@ -28,5 +34,5 @@ def make_subjects
   Subject.create!(name: "Computer Science")
   Subject.create!(name: "Algebra")
   Subject.create!(name: "Biotechnology")
-  Subject.create!(name: "Ancient History")
+  Subject.create!(name: "Classical History")
 end

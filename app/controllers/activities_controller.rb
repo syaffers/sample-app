@@ -3,7 +3,8 @@ class ActivitiesController < ApplicationController
   before_action :authorized_user
   
   def index
-    @activities = PublicActivity::Activity.order("created_at desc")
+    @paper_activities = PublicActivity::Activity.order("updated_at desc").where(:trackable_type => "Paper", :key => ['paper.update','paper.create'])
+    @review_activities = PublicActivity::Activity.order("updated_at desc").where(:trackable_type => "Review", :key =>['review.update','review.create'])
   end
   
   private

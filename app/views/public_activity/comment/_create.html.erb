@@ -2,6 +2,7 @@
     <%= link_to activity.owner.name, activity.owner if activity.owner %>
     added a comment to 
     <%= link_to activity.trackable.paper.title, activity.trackable.paper %>
+    <%= time_ago_in_words(activity.trackable.updated_at) %> ago
 <% else %>
 
 <% end %>

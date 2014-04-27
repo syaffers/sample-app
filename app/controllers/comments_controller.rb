@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(paper_params)
     
     if @comment.save
+      @comment.create_activity :create, owner: (current_user if signed_in?), recipient: @comment.paper.user
       flash[:success] = "Comment was successfully posted"
       redirect_to @comment.paper
     else

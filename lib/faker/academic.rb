@@ -4,6 +4,10 @@ module Faker
       def rank
         fetch('academic.rank')
       end
+      
+      def tag
+        fetch('academic.tag')
+      end
     end
   end
 end

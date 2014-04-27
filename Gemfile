@@ -12,6 +12,7 @@ gem 'acts_as_votable', '~> 0.8.0'
 gem 'aasm', '~>3.1.1'
 gem 'public_activity'
 gem 'alphabetical_paginate'
+gem 'acts-as-taggable-on'
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do

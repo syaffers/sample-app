@@ -1,0 +1,30 @@
+<% @newest_papers.each do |paper| %>
+    <div class="span4">
+        <h5>
+            <%= link_to paper.title, paper %>
+        </h5>
+        <%= image_tag paper.pdf.url(:pdf_thumbnail), class: "snapshot", title: paper.title %>
+        <p class="description">
+            <% if paper.updated_at == paper.created_at %>
+                Uploaded on
+            <% else %>
+                Updated on
+            <% end %>
+            <%= paper.updated_at.to_formatted_s(:long) %>
+            by
+            <%= link_to paper.user.name, paper.user %>
+            in
+            <%= link_to paper.subject.name %></p>
+        <p class="paper-stats">
+            <span><%= caps_first(paper.state) %></span>,
+            <span><%= pluralize paper.comments.count, "comment" %></span>, 
+            <span><%= pluralize paper.reviews.count, "review" %></span>,
+            <span><%= pluralize paper.upvotes.size, "upvote" %></span>,
+            <span><%= pluralize paper.downvotes.size, "downvote" %></span>,
+        </p>
+        <p>
+            <strong>Tags:</strong>
+            <%= paper.tag_list %>
+        </p>
+    </div>
+<% end %>

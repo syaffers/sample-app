@@ -1,16 +1,16 @@
 <% @user ||= current_user %>
-<div class="stats row">
-    <a class="span3" href="<%= #following_user_path(@user) 
-    %>">
-        0 papers to review
-    </a>
-    <a class="span3" href="#">
-        <%= pluralize @reviews.count, "paper" %> reviewed
-    </a>
-    <a class="span3" href="#">
+<div class="stats">
+    <h3>Stats</h3>
+    <span class="span3">
+        <%= pluralize @reviews.pluck(:review_status).count(0), 'paper' %> reviewing
+    </span>
+    <span class="span3">
+        <%= pluralize @reviews.pluck(:review_status).count(1), "paper" %> reviewed
+    </span>
+    <span class="span3">
         <%= pluralize @papers.count, "paper" %> uploaded
-    </a>
-    <a class="span3" href="#">
-        0 papers published
-    </a>
+    </span>
+    <span class="span3">
+        <%= pluralize @user.papers.where(state: "published").count, "paper" %> published
+    </span>
 </div>

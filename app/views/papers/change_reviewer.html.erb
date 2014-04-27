@@ -1,0 +1,42 @@
+<% provide(:title, "Change Reviewer") %>
+<div class="row">
+    <div class="span12">
+        <h1>Change Reviewer</h1>
+        <h3>Current Reviewers</h3>
+        <ul class="users">
+            <% @paper.reviews.each do |review| %>
+                <% if review.review_status == 0 %>
+                    <li>
+                        <p>
+                            <%= link_to review.user.name, review.user%>
+                            has not completed the review to
+                            <%= link_to review.paper.title, review.paper %>.
+                        </p>
+                        <p>
+                            Last update:
+                            <%= time_ago_in_words review.updated_at %> ago
+                            |
+                            <%= mail_to review.user.email, "E-mail a reminder" %>
+                            |
+                            <%= link_to "Delete Review", review, method: :delete, data: { confirm: "Are you sure?" }  %>
+                        </p>
+                    </li>
+                <% end %>
+            <% end %>
+        </ul>
+        
+        <h3>Potential Reviewers</h3>
+        <ul class="users">
+            <% @matching_users.each do |user| %>
+                <li>
+                    <%= gravatar_for user, size: 52 %>
+                    <%= link_to user.name, user %>
+                    <p><%= user.job_title %> at <%= user.institution %></p>
+                    |
+                    <%= mail_to user.email, "E-mail a review request" %>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+</div>
+

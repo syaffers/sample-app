@@ -4,7 +4,6 @@ class ReviewsController < ApplicationController
   before_action :own_paper, only: [:new]
   before_action :double_review, only: [:new]
   before_action :review_limit, only: [:new]
-  before_action :set_review, only: [:show]
   
   def show
     @review = Review.find(params[:id])

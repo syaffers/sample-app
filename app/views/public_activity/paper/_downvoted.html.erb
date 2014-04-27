@@ -1,9 +1,9 @@
 <% if activity.trackable %>
-    <%= link_to activity.owner.name, activity.owner if activity.owner %>
+    <%= activity.owner.name if activity.owner %>
     voted
     <%= link_to activity.trackable.title, activity.trackable %>
     down
-    <%= activity.inspect %>
+    <%= time_ago_in_words(activity.trackable.updated_at) %> ago
 <% else %>
 
 <% end %>

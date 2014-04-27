@@ -1,7 +1,24 @@
 <li class="paper">
     <span class="title"><%= link_to paper.title, paper %></span>
     <span class="timestamp">
-        Uploaded on <%= paper.created_at.strftime("%d-%m-%Y") %>
+        <% if paper.updated_at == paper.created_at %>
+            Uploaded
+        <% else %>
+            Updated
+        <% end %>
+        <%= time_ago_in_words(paper.updated_at) %> ago
+    </span>
+    <span class="upvotes">
+        <%= pluralize paper.upvotes.size, "upvote" %>
+    </span>
+    <span class="downvotes">
+        <%= pluralize paper.downvotes.size, "downvote" %>
+    </span>
+    <span class="comments">
+        <%= pluralize paper.comments.size, "comment" %>
+    </span>
+    <span class="reviews">
+        <%= pluralize paper.reviews.size, "review" %>
     </span>
     <% if current_user?(paper.user) %>
         <%= #link_to "Delete", paper, method: :delete, data: { confirm: "Confirm deletion of this paper?" }, title: paper.title 

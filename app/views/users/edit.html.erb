@@ -30,6 +30,9 @@
             <%= f.label :summary %>
             <%= f.text_area :summary %>
             
+            <%= f.label :tag_list, "List your subjects of interest (separated by commas)" %>
+            <%= f.text_field :tag_list %>
+            
             <%= f.submit "Save Changes", class: "btn btn-primary" %>
         <% end %>
         

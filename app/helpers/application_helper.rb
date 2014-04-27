@@ -9,4 +9,8 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
+  
+  def caps_first(string)
+    string.sub(/^(\w)/) {|s| s.capitalize}
+  end
 end

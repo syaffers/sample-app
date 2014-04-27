@@ -2,7 +2,7 @@
 <div class="row show-paper">
     <h3 class="title"><%= @paper.title %></h3>
     <div class="span1">
-        <div class="likes">
+        <div class="votes">
             <%= render "vote" %>
         </div>
     </div>
@@ -48,7 +48,19 @@
                 <% end %>
             <% end %>
         </p>
-                
+        <p>
+            <strong>Tags:</strong>
+            <%= @paper.tag_list %>
+        </p>
+        <h4>Supporting Files</h4>
+        <%= image_tag @paper.ifile1.url(:thumb), title: "Image file 1" %>
+        <%= image_tag @paper.ifile2.url(:thumb), title: "Image file 2" %>
+        <%= image_tag @paper.sfile.url(:thumb), title: "Audio" %>
+        <%= image_tag @paper.vfile.url(:thumb), title: "Video" %>
+        
+        <% if signed_in? && current_user.admin? %>
+            <p><%= link_to 'Delete Paper', @paper, method: :delete, data: { confirm: "Delete this paper?" }%></p>
+        <% end %>
     </div>
     <div class="span12 reviews">
         <%= render "reviews/review" %>
