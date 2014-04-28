@@ -53,12 +53,15 @@
             <%= @paper.tag_list %>
         </p>
         <h4>Supporting Files</h4>
-        <%= image_tag @paper.ifile1.url(:thumb), title: "Image file 1" %>
-        <%= image_tag @paper.ifile2.url(:thumb), title: "Image file 2" %>
-        <%= image_tag @paper.sfile.url(:thumb), title: "Audio" %>
-        <%= image_tag @paper.vfile.url(:thumb), title: "Video" %>
-        
+        <ul class="supporting-files">
+        <% @paper.assets.each do |asset|%>
+            <li>
+                <%= link_to asset.asset_file_name, asset.asset.url %>
+            </li>
+        <% end %>
+        </ul>
         <% if signed_in? && current_user.admin? %>
+            <h5>Delete Paper</h5>
             <p><%= link_to 'Delete Paper', @paper, method: :delete, data: { confirm: "Delete this paper?" }%></p>
         <% end %>
     </div>

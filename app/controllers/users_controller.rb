@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :update_status]
   
   def index
-    @users, @alphaParams = User.alpha_paginate(params[:letter]) { |user| user.name }
+    @users, @alphaParams = User.alpha_paginate(params[:letter], { :js => false}) { |user| user.name }
   end
   
   def new

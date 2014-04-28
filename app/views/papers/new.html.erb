@@ -20,17 +20,14 @@
             <%= f.label :pdf, "Upload Paper (PDF format only)"%>
             <%= f.file_field :pdf %>
             
-            <%= f.label :ifile1, "Upload supporting image 1 (optional, formats: .gif, .png, .jpg)"%>
-            <%= f.file_field :sfile1 %>
-            
-            <%= f.label :ifile2, "Upload supporting image 2 (optional, formats: .gif, .png, .jpg)"%>
-            <%= f.file_field :sfile2 %>
-            
-            <%= f.label :sfile, "Upload supporting sound (optional, formats: .wav, .mp3, .ogg)"%>
-            <%= f.file_field :sfile %>
-            
-            <%= f.label :sfile, "Upload supporting video (optional, formats: .avi, .flv, .mp4)"%>
-            <%= f.file_field :sfile %>
+            <h5>Upload Supporting Media</h5>
+            <p>You can add supporting images, video, or sound file in the sections below</p>
+            <p><small>Supported types: .jpg, .png, .gif, .avi, .mp4, .mp3, .ogg</small></p>
+            <%= f.fields_for :assets do |asset_fields| %>
+                <% if asset_fields.object.new_record? %>
+                    <p><%= asset_fields.file_field :asset %></p>
+                <% end %>
+            <% end %>
             
             <%= f.hidden_field :user_id %>
             <%= f.hidden_field :version %>
