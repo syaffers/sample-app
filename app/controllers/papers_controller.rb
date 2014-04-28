@@ -15,7 +15,7 @@ class PapersController < ApplicationController
   def show
     @paper = Paper.find(params[:id])
     @user = current_user
-    @matching_papers = match_papers(@paper, Paper.all)
+    @matching_papers = match_papers(@paper, Paper.all.order("updated_at desc"))
     
     if !current_user.nil?
       user_id = current_user.id
@@ -36,7 +36,6 @@ class PapersController < ApplicationController
   # GET /papers/1/edit
   def edit
     @user = User.find(@paper.user.id)
-    @paper.version += 1
     4.times { @paper.assets.build }
   end
 
@@ -61,6 +60,9 @@ class PapersController < ApplicationController
   # PATCH/PUT /papers/1.json
   def update
     respond_to do |format|
+      if !params[:paper][:pdf].nil?
+        params[:paper][:version] = (@paper.version + 1).to_s
+      end
       if @paper.update(paper_params)
         @paper.create_activity :update, owner: current_user
         format.html { redirect_to @paper, notice: "Paper was successfully updated." }
@@ -166,7 +168,7 @@ class PapersController < ApplicationController
       @paper = Paper.find(params[:id])
       redirect_to @paper unless @paper.reviews.sum('review_status') >= 3
     end
-    
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
       params.require(:paper).permit(:title, :user_id, :subject_id, :pdf, :version, :paper_status, :tag_list, assets_attributes: [:asset, :id, :_destroy])

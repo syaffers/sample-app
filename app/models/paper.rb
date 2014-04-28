@@ -27,13 +27,14 @@ class Paper < ActiveRecord::Base
   #file dependencies
   has_attached_file :pdf,
     :styles => { :pdf_thumbnail => ["200x283#", :png] },
-    :url => "/assets/papers/:id/:basename.:extension",
-    :path => ":rails_root/public/assets/papers/:id/:basename.:extension",
+    :url => "/assets/papers/:id/transpub-:paper_id-v:paper_version.:extension",
+    :path => ":rails_root/public/assets/papers/:id/transpub-:paper_id-v:paper_version.:extension",
     :keep_old_files => true
   
   #validations
   validates :title, presence: true, length: { maximum: 150 }
   validates :subject_id, presence: true
+  validates :pdf, presence: true
   validates :version, presence: true
   
   #pdf only validation
@@ -47,7 +48,17 @@ class Paper < ActiveRecord::Base
     paper.error.add attr, "too many reviews for paper" if paper.reviews.size > paper.review_limit
   end
   
-  ## Functions ##  
+  ## Functions ##
+  # for paper versioning into filename
+  Paperclip.interpolates :paper_version do |attachment, style|
+    attachment.instance.version
+  end
+  
+  # for paper title
+  Paperclip.interpolates :paper_id do |attachment, style|
+    attachment.instance.id
+  end
+  
   def self.search(search)
     if search
       self.where("title LIKE ?", "%#{search}%")
