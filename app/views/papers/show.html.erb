@@ -52,13 +52,30 @@
             <strong>Tags:</strong>
             <%= @paper.tag_list %>
         </p>
-        <h4>Supporting Files</h4>
+        
+        <p>
+            <strong>Supporting Files:</strong>
+        </p>
         <ul class="supporting-files">
-        <% @paper.assets.each do |asset|%>
-            <li>
-                <%= link_to asset.asset_file_name, asset.asset.url %>
-            </li>
-        <% end %>
+            <% @paper.assets.each do |asset|%>
+                <li>
+                    <p><%= link_to asset.asset_file_name, asset.asset.url %></p>
+                </li>
+            <% end %>
+        </ul>        
+        <hr />
+        
+        <h4>Similar Papers</h4>
+        <ul class="matching-papers">
+            <% @matching_papers.each do |paper|%>
+                <li>
+                    <%= link_to paper.title, paper %>
+                    <p>
+                        <strong>Tags:</strong>
+                        <%= paper.tag_list %>
+                    </p>
+                </li>
+            <% end %>
         </ul>
     </div>
     <div class="span12 reviews">

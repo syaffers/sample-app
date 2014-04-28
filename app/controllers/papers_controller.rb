@@ -15,6 +15,7 @@ class PapersController < ApplicationController
   def show
     @paper = Paper.find(params[:id])
     @user = current_user
+    @matching_papers = match_papers(@paper, Paper.all)
     
     if !current_user.nil?
       user_id = current_user.id
@@ -146,6 +147,21 @@ class PapersController < ApplicationController
       return matching_users
     end
     
+    # match papers to papers
+    def match_papers(current_paper, papers)
+      matching_papers = []
+      papers.each do |paper|
+        unless current_paper == paper
+          matching_tags = current_paper.tag_list & paper.tag_list
+          if matching_tags.count.to_f / current_paper.tag_list.count >= 0.4
+            matching_papers << paper
+          end
+        end
+      end
+      return matching_papers
+    end
+    
+    # check if paper has enough accepts, else redirect
     def enough_accepts
       @paper = Paper.find(params[:id])
       redirect_to @paper unless @paper.reviews.sum('review_status') >= 3
