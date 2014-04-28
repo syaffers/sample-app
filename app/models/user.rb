@@ -12,18 +12,18 @@ class User < ActiveRecord::Base
   has_many :reviews, dependent: :destroy
   
   # validations
-  validates( :name, presence: true, length: { maximum: 50 } )
+  validates(:name, presence: true, length: { maximum: 75 } )
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-  validates( :email, presence:    true, 
-                     format:      { with: VALID_EMAIL_REGEX }, 
-                     uniqueness:  { case_sensitive: false } )
+  validates(:email, presence:    true, 
+                    format:      { with: VALID_EMAIL_REGEX }, 
+                    uniqueness:  { case_sensitive: false } )
                                      
-  validates( :password, length: { minimum: 6 }, :on => :create)
+  validates(:password, length: { minimum: 6 }, :on => :create)
+  validates(:job_title, presence: true)
+  validates(:institution, presence: true)
   
-  validates( :job_title, presence: true )
-  
-  validates( :institution, presence: true )
+  validates_length_of :tag_list, :maximum => 9
                                      
   has_secure_password
   

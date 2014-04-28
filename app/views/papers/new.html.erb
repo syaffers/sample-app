@@ -4,36 +4,7 @@
 
 <div class="row">
     <div class="span12">
-        <%= form_for @paper, :html => { :multipart => true } do |f| %>
-            <%= render 'shared/error_messages', object: f.object %>
-        
-            <%= f.label :title, "Title of Paper", placeholder: "Example Title and the Rest" %>
-            <%= f.text_field :title %>
-            
-            <%= f.label :tag_list, "Tags (seperated by commas)" %>
-            <%= f.text_field :tag_list %>
-            
-            <% subject_array = Subject.all.map { |subj| [subj.name, subj.id] } %>
-            <%= f.label :subject_id, "Subject Field" %>
-            <%= f.select :subject_id, options_for_select(subject_array) %>
-            
-            <%= f.label :pdf, "Upload Paper (PDF format only)"%>
-            <%= f.file_field :pdf %>
-            
-            <h5>Upload Supporting Media</h5>
-            <p>You can add supporting images, video, or sound file in the sections below</p>
-            <p><small>Supported types: .jpg, .png, .gif, .avi, .mp4, .mp3, .ogg</small></p>
-            <%= f.fields_for :assets do |asset_fields| %>
-                <% if asset_fields.object.new_record? %>
-                    <p><%= asset_fields.file_field :asset %></p>
-                <% end %>
-            <% end %>
-            
-            <%= f.hidden_field :user_id %>
-            <%= f.hidden_field :version %>
-            
-            <%= f.submit "Create Paper", class: "btn btn-primary" %>
-        <% end %>
+        <%= render "form" %>
     </div>
 </div>
 

@@ -35,13 +35,19 @@ class Paper < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 150 }
   validates :subject_id, presence: true
   validates :version, presence: true
+  
+  #pdf only validation
   validates_attachment_content_type :pdf, 
     :content_type => 'application/pdf'
+    
+  #limit to 5 tags
+  validates_length_of :tag_list, :maximum => 5
   
   validates_each :reviews do |paper, attr, value|
     paper.error.add attr, "too many reviews for paper" if paper.reviews.size > paper.review_limit
   end
   
+  ## Functions ##  
   def self.search(search)
     if search
       self.where("title LIKE ?", "%#{search}%")

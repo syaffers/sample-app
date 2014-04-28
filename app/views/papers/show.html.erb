@@ -60,10 +60,6 @@
             </li>
         <% end %>
         </ul>
-        <% if signed_in? && current_user.admin? %>
-            <h5>Delete Paper</h5>
-            <p><%= link_to 'Delete Paper', @paper, method: :delete, data: { confirm: "Delete this paper?" }%></p>
-        <% end %>
     </div>
     <div class="span12 reviews">
         <%= render "reviews/review" %>
