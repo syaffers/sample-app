@@ -30,7 +30,7 @@ Transpub::Application.routes.draw do
   match "/signin", to: "sessions#new", via: "get"
   match "/signout", to: "sessions#destroy", via: "delete"
 
-  match "/contact", to: "static_pages#contact", via: "get"
+  match "/about", to: "static_pages#about", via: "get"
   
   match "/search_papers", to: "papers#index", via: "get"
   match "/browse_papers", to: "papers#browse", via: "get"
