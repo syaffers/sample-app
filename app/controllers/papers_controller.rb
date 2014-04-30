@@ -1,6 +1,6 @@
 class PapersController < ApplicationController 
   before_action :signed_in_user, only: [:new, :edit, :update, :destroy, :upvote, :downvote, :publish]
-  before_action :editor_user, only:[:publish, :reject]
+  before_action :editor_user, only:[:publish, :reject, :change_reviewer]
   before_action :correct_user, only: [:edit, :update, :destroy]
   
   # GET /papers
@@ -107,7 +107,12 @@ class PapersController < ApplicationController
   
   def change_reviewer
     @paper = Paper.find(params[:id])
-    @matching_users = match_users(User.all, @paper)
+    if (@paper.published? || @paper.rejected?)
+      flash[:notice] = "Paper is #{@paper.state}"
+      redirect_to @paper
+    else
+      @matching_users = match_users(User.all, @paper)
+    end
   end
   
   # Publishing

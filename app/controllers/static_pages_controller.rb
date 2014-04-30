@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
+    @newest_papers = Paper.order("updated_at desc").limit(3)
     if signed_in?
       @reviews = current_user.reviews.where(:review_status => 0)
       @matching_papers = match_papers(Paper.all)
@@ -7,14 +8,8 @@ class StaticPagesController < ApplicationController
     end
   end
 
-  def help
-  end
-  
   def about
     @fund = Fund.first
-  end
-  
-  def contact
   end
   
   private

@@ -272,15 +272,16 @@ aside {
 
 p.meta {
   .upvotes {
+    color: #2ecc71;
     }
   .downvotes {
     color: #e74c3c;
   }
   .comments {
-    color: #f39c12
+    color: #f39c12;
   }
   .reviews {
-    color: #9e5fb8
+    color: #9e5fb8;
   }
 }
 
@@ -307,6 +308,13 @@ p.meta {
   border-bottom: 2px solid #c0392b;
 }
 
+.browse-papers {
+  .no-bullet {
+    list-style-type: none;
+    border-bottom: 1px solid $grayLighter;
+    margin-left: 0;
+  }
+}
 /* search */
 .search-form {
   input[type=text] {

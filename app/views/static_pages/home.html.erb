@@ -36,7 +36,10 @@
 	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
 </div>
 <div class="row-fluid">
-    
+    <div class="span12"><h3 class="center">Newest Papers</h3></div>
+</div>
+<div class="row-fluid">
+    <%= render "papers/new_papers"%>
 </div>
         
 <% end %>

@@ -2,15 +2,41 @@
 <h1>Browse Papers</h1>
 <div class="row-fluid">
     <div class="span12 browse-papers">
-        <ol>
+        <ol class="no-bullet">
             <% @subjects.each do |subject| %>
             <li>
-                <a href="#">
-                    <%= subject.name %>
-                </a>
-                <ul>
+                <h3><%= subject.name %></h3>
+                <ul class="no-bullet">
                     <% subject.papers.each do |paper| %>
-                    <li><%= link_to paper.title, paper %></li>
+                        <li class="paper">
+                            <span class="title"><%= link_to paper.title, paper %></span>
+                            <span class="timestamp">
+                                <% if paper.updated_at == paper.created_at %>
+                                    Uploaded
+                                <% else %>
+                                    Updated
+                                <% end %>
+                                <%= time_ago_in_words(paper.updated_at) %> ago
+                            </span>
+                            <p class="meta">
+                                <span class="upvotes">
+                                    <%= pluralize paper.upvotes.size, "upvote" %>
+                                </span>
+                                |
+                                <span class="downvotes">
+                                    <%= pluralize paper.downvotes.size, "downvote" %>
+                                </span>
+                                |
+                                <span class="comments">
+                                    <%= pluralize paper.comments.size, "comment" %>
+                                </span>
+                                |
+                                <span class="reviews">
+                                    <%= pluralize paper.reviews.size, "review" %>
+                                </span>
+                            </p>
+                        </li>
+
                     <% end %>
                 </ul>
             </li>
