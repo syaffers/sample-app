@@ -17,7 +17,7 @@
 <% else %>
     <p>This paper has not been reviewed.</p>
 <% end %>
-<% if signed_in? && !paper_user?(@paper) %>
+<% if signed_in? && !paper_user?(@paper) && @paper.submitted? %>
     <% if !@paper.reviews.pluck(:user_id).include?(current_user.id) && (@paper.reviews.count < 3) %>
     <p>
         <em>Would you like to review this paper?</em>

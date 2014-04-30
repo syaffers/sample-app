@@ -1,7 +1,7 @@
 class PapersController < ApplicationController 
   before_action :signed_in_user, only: [:new, :edit, :update, :destroy, :upvote, :downvote, :publish]
-  before_action :enough_accepts, only: [:publish]
-  before_action :correct_user, only: [:edit, :update, :destroy, :publish]
+  before_action :editor_user, only:[:publish, :reject]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   
   # GET /papers
   # GET /papers.json
@@ -113,12 +113,35 @@ class PapersController < ApplicationController
   # Publishing
   def publish
     @paper = Paper.find(params[:id])
-    if @paper.reviews.sum("review_status") >= 3
-      @paper.create_activity key: 'paper.published', owner: current_user
-      @paper.publish
+    if @paper.submitted?
+      if @paper.reviews.sum("review_status") == 3
+        @paper.publish_paper
         if @paper.save
+          @paper.create_activity key: 'paper.published', owner: current_user, recipient: @paper.user
           flash[:success] = "Paper successfully published"
+        else
+          flash[:error] = "Paper does not have enough accepted reviews"
         end
+      end
+    else
+       flash[:error] = "Paper cannot be published"
+    end
+    redirect_to @paper
+  end
+  
+  # Rejecting
+  def reject
+    @paper = Paper.find(params[:id])
+    if @paper.submitted?
+      @paper.reject_paper
+      if @paper.save
+        @paper.create_activity key: 'paper.rejected', owner: current_user, recipient: @paper.user
+        flash[:success] = "Paper successfully rejected"
+      else
+        flash[:error] = "Paper could not be rejected"
+      end
+    else
+      flash[:error] = "Paper cannot be rejected"
     end
     redirect_to @paper
   end
@@ -135,6 +158,11 @@ class PapersController < ApplicationController
         redirect_to root_url 
         flash[:error] = "Unauthorized paper access"
       end
+    end
+    
+    # check if editor
+    def editor_user
+        (flash[:error] = "Unauthorized action") unless current_user.editor?
     end
     
     # match users to paper
@@ -161,12 +189,6 @@ class PapersController < ApplicationController
         end
       end
       return matching_papers
-    end
-    
-    # check if paper has enough accepts, else redirect
-    def enough_accepts
-      @paper = Paper.find(params[:id])
-      redirect_to @paper unless @paper.reviews.sum('review_status') >= 3
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,0 +1,12 @@
+<% if activity.trackable %>
+    <% if activity.owner == current_user %>
+        <%= activity.owner.name %>
+    <% else %>
+        <%= link_to activity.owner.name, activity.owner %>
+    <% end %>
+    rejected
+    <%= link_to activity.trackable.title, activity.trackable %>
+    <%= time_ago_in_words(activity.trackable.updated_at) %> ago
+<% else %>
+
+<% end %>

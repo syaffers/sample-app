@@ -14,6 +14,7 @@ Transpub::Application.routes.draw do
       put 'upvote', to: "papers#upvote"
       put 'downvote', to: "papers#downvote"
       put 'publish', to: "papers#publish"
+      put 'reject', to: "papers#reject"
       get 'change_reviewer', to: "papers#change_reviewer"
     end
   end

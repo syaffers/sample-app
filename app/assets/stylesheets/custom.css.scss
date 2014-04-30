@@ -1,6 +1,6 @@
 @import 'bootstrap';
 /* bootstrap */
-.review-match {
+.all-left {
   .span12 {
     margin-left: 0;
   }
@@ -272,7 +272,6 @@ aside {
 
 p.meta {
   .upvotes {
-    color: #2ecc71;
     }
   .downvotes {
     color: #e74c3c;
@@ -283,6 +282,29 @@ p.meta {
   .reviews {
     color: #9e5fb8
   }
+}
+
+.button-like {
+  padding: 6px 12px;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 5px;
+  &:hover {
+    text-decoration: none;
+    color: #fff;
+  }
+}
+
+.publish {
+  background-color: #2ecc71;
+  border: 1px solid #27ae60;
+  border-bottom: 2px solid #27ae60;
+}
+
+.reject {
+  background-color: #e74c3c;
+  border: 1px solid #c0392b;
+  border-bottom: 2px solid #c0392b;
 }
 
 /* search */

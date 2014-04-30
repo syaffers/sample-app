@@ -16,11 +16,16 @@ class Paper < ActiveRecord::Base
   #paper states
   aasm_column :state
   aasm do
-    state :under_review, :initial => true
+    state :submitted, :initial => true
     state :published
+    state :rejected
   
-    event :publish do
-      transitions :from => :under_review, :to => :published
+    event :publish_paper do
+      transitions :from => :submitted, :to => :published
+    end
+    
+    event :reject_paper do
+      transitions :from => :submitted, :to => :rejected
     end
   end
   
