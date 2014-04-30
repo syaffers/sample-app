@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140427191402) do
+ActiveRecord::Schema.define(version: 20140430040836) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -48,6 +48,13 @@ ActiveRecord::Schema.define(version: 20140427191402) do
     t.integer  "paper_id"
   end
 
+  create_table "funds", force: true do |t|
+    t.float    "needed"
+    t.float    "collected"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "papers", force: true do |t|
     t.string   "title"
     t.integer  "user_id"
@@ -58,7 +65,6 @@ ActiveRecord::Schema.define(version: 20140427191402) do
     t.string   "pdf_content_type"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
-    t.integer  "review_limit",     default: 3
     t.integer  "version",          default: 1
     t.string   "state"
   end

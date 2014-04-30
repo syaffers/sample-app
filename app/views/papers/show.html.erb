@@ -1,5 +1,5 @@
 <% provide :title, @paper.title %>
-<div class="row-fluid show-paper">
+<div class="row show-paper">
     <h3 class="title"><%= @paper.title %></h3>
     <div class="span1">
         <div class="votes">
@@ -79,7 +79,7 @@
         
         <h4>Similar Papers</h4>
         <ul class="matching-papers">
-            <% @matching_papers[0..3].each do |paper|%>
+            <% @matching_papers.each do |paper|%>
                 <li>
                     <p>
                         <%= link_to paper.title, paper %>

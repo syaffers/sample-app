@@ -1,4 +1,6 @@
 Transpub::Application.routes.draw do
+  resources :funds, :only => [:edit, :show, :update]
+
   resources :users do
     member do
       put 'update_status'

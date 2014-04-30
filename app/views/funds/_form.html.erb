@@ -1,0 +1,11 @@
+<%= form_for(@fund) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :needed, "Amount Needed" %>
+  <%= f.text_field :needed %>
+  
+  <%= f.label :collected, "Amount Collected" %>
+  <%= f.text_field :collected %>
+
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>

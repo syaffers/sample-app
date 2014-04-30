@@ -11,6 +11,7 @@ class StaticPagesController < ApplicationController
   end
   
   def about
+    @fund = Fund.first
   end
   
   def contact

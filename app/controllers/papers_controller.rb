@@ -15,7 +15,7 @@ class PapersController < ApplicationController
   def show
     @paper = Paper.find(params[:id])
     @user = current_user
-    @matching_papers = match_papers(@paper, Paper.all.order("updated_at desc"))
+    @matching_papers = match_papers(@paper, Paper.all.order("updated_at desc").limit(4))
     
     if !current_user.nil?
       user_id = current_user.id
