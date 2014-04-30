@@ -2,6 +2,8 @@ Transpub::Application.routes.draw do
   resources :users do
     member do
       put 'update_status'
+      get 'notifications'
+      get 'activities'
     end
   end  
   resources :activities

@@ -2,7 +2,7 @@
 
 <h1>Editing <%= @paper.title %></h1>
 
-<div class="row">
+<div class="row-fluid">
     <div class="span12">
 
         <%= form_for @paper, :html => { :multipart => true } do |f| %>
@@ -21,7 +21,7 @@
             <%= f.label :pdf, "Upload Paper (PDF format only). Note: upload a paper if title is being changed"%>
             <%= f.file_field :pdf %>
             
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span6">
                     <h5>Upload Supporting Media</h5>
                     <p>You can add supporting images, video, or sound file in the sections below</p>

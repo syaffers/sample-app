@@ -1,4 +1,11 @@
 @import 'bootstrap';
+/* bootstrap */
+.review-match {
+  .span12 {
+    margin-left: 0;
+  }
+}
+
 
 /* variables, mixins, etc. */
 @mixin box_sizing {
@@ -226,7 +233,7 @@ aside {
   }
 }
 
-/* microposts */
+/* papers */
 
 .papers {
   list-style-type: none;
@@ -257,6 +264,21 @@ aside {
   textarea {
     height: 100px;
     margin-bottom: 5px;
+  }
+}
+
+p.meta {
+  .upvotes {
+    color: #2ecc71;
+    }
+  .downvotes {
+    color: #e74c3c;
+  }
+  .comments {
+    color: #f39c12
+  }
+  .reviews {
+    color: #9e5fb8
   }
 }
 

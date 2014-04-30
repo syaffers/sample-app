@@ -1,7 +1,7 @@
 <div class="activities">
-    <% if @activities.any? %>
+    <% if @notifications.any? %>
         <ul class="activity-list">
-            <% @activities.each do |activity| %>
+            <% @notifications.each do |activity| %>
                 <% if activity.trackable %>
                     <li class="activity">
                         <%= render_activity activity %>

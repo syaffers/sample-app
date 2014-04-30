@@ -50,7 +50,10 @@
             <%= render "shared/stats"%>
         </section>
         <section>
+            <h3>Activities</h3>
             <%= render "activity" %>
+            <hr />
+            <%= link_to "All activities", activities_user_path(@user)%>
         </section>
     </aside>
     <div class="span8">

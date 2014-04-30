@@ -15,12 +15,12 @@
             <%= link_to review.paper.user.name, review.paper.user %>
             in
             <%= link_to review.paper.subject.name %></p>
-        <p class="paper-stats">
-            <span><%= caps_first(review.paper.state) %></span>,
-            <span><%= pluralize review.paper.comments.count, "comment" %></span>, 
-            <span><%= pluralize review.paper.reviews.count, "review" %></span>,
-            <span><%= pluralize review.paper.upvotes.size, "upvote" %></span>,
-            <span><%= pluralize review.paper.downvotes.size, "downvote" %></span>,
+        <p class="meta">
+            <span><%= caps_first(review.paper.state) %></span> |
+            <span class="comments"><%= pluralize review.paper.comments.count, "comment" %></span> |
+            <span class="reviews"><%= pluralize review.paper.reviews.count, "review" %></span> |
+            <span class="upvotes"><%= pluralize review.paper.upvotes.size, "upvote" %></span> |
+            <span class="downvotes"><%= pluralize review.paper.downvotes.size, "downvote" %></span>
         </p>
         <p>
             <strong>Tags:</strong>

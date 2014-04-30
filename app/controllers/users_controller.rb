@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:edit, :update, :destroy, :following, :followers]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :signed_in_user, only: [:edit, :update, :destroy, :notifications, :update_status]
+  before_action :correct_user, only: [:edit, :update, :notifications]
   before_action :admin_user, only: [:destroy, :update_status]
   
   def index
@@ -15,8 +15,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @papers = @user.papers
     @reviews = @user.reviews
-    @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: @user.id)
-    @ext_activities = PublicActivity::Activity.order("created_at desc").where()
+    @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: @user.id).limit(5)
   end
   
   def create
@@ -55,6 +54,15 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+  
+  def notifications
+    @notifications = PublicActivity::Activity.order("created_at desc").where(recipient_id: current_user.id)
+  end
+  
+  def activities
+    @user = User.find(params[:id])
+    @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: @user.id)
   end
   
   def destroy
