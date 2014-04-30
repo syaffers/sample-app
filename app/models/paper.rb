@@ -45,7 +45,7 @@ class Paper < ActiveRecord::Base
   validates_length_of :tag_list, :maximum => 5
   
   validates_each :reviews do |paper, attr, value|
-    paper.error.add attr, "too many reviews for paper" if paper.reviews.size > paper.review_limit
+    paper.error.add attr, "too many reviews for paper" if paper.reviews.size > 3
   end
   
   ## Functions ##

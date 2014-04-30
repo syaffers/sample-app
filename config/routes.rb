@@ -20,7 +20,6 @@ Transpub::Application.routes.draw do
   resources :comments
   resources :reviews
   resources :sessions, only: [:new, :create, :destroy]
-  resources :relationships, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
   resources :subjects
   #get "users/new"

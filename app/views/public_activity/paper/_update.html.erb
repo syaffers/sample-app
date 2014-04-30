@@ -1,5 +1,9 @@
 <% if activity.trackable %>
-    <%= activity.owner.name if activity.owner %>
+    <% if activity.owner == current_user %>
+        <%= activity.owner.name %>
+    <% else %>
+        <%= link_to activity.owner.name, activity.owner %>
+    <% end %>
     updated
     <%= link_to activity.trackable.title, activity.trackable %>
     <%= time_ago_in_words(activity.trackable.updated_at) %> ago

@@ -92,6 +92,9 @@
     </div>
     <div class="span12 reviews">
         <%= render "reviews/review" %>
+        <% if signed_in? %>
+            <%= link_to "Change reviewers", change_reviewer_paper_path if (current_user.editor? || current_user.admin?) %>
+        <% end %>
     </div>
     <div class="span12 comments">
         <%= render "comments/comment" %>
