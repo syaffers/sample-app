@@ -3,7 +3,9 @@
     <ul>
     <% @paper.reviews.each do |review| %>
         <li class="<%= review_status(review.review_status) %>">
+            <p class="overdue"><strong><%= "*This review update is overdue" if review.created_at < 2.weeks.ago %></strong></p>
             <strong><%= link_to review.user.name, review.user %>:</strong>
+            <p><em>Updated <%= time_ago_in_words(review.updated_at) %> ago</em></p>
             <%= raw sanitize(simple_format(truncate(review.content, :length => 400)), :tags => %w(br p) ) %>
             <% if signed_in? %>
                 <p><%= link_to "Read more...", review %></p>

@@ -1,7 +1,7 @@
 <% provide(:title, "User Activities")%>
 <h1>User Activities</h1>
 <div class="activities row-fluid">
-    <div class="span6">
+    <div class="span4">
         <h4>Paper Activities</h4>
         <% if @paper_activities.any? %>
             <ul class="activity-list">
@@ -15,7 +15,7 @@
             </ul>
         <% end %>
     </div>
-    <div class="span6">
+    <div class="span4">
         <h4>Review Activities</h4>
         <% if @review_activities.any? %>
         <ul class="activity-list">
@@ -27,6 +27,24 @@
                 <% end %>
             <% end %>
         </ul>
+        <% end %>
+    </div>
+    <div class="span4">
+        <h4>Late Reviews</h4>
+        <% if @late_reviews.any? %>
+        <ul class="activity-list">
+            <% @late_reviews.each do |review| %>
+                <li class="activity">
+                    A
+                    <%= link_to "review", review %>
+                    for
+                    <%= link_to review.paper.title, review.paper %>
+                    is overdue
+                </li>
+            <% end %>
+        </ul>
+        <% else %>
+            <p><em>No late reviews found</em>
         <% end %>
     </div>
 </div>

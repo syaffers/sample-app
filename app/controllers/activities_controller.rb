@@ -5,6 +5,7 @@ class ActivitiesController < ApplicationController
   def index
     @paper_activities = PublicActivity::Activity.order("updated_at desc").where(:trackable_type => "Paper", :key => ['paper.update','paper.create'])
     @review_activities = PublicActivity::Activity.order("updated_at desc").where(:trackable_type => "Review", :key =>['review.update','review.create'])
+    @late_reviews = Review.where("updated_at < ?", 2.weeks.ago)
   end
   
   private

@@ -10,7 +10,8 @@
                         <p>
                             <%= link_to review.user.name, review.user%>
                             has not completed the review to
-                            <%= link_to review.paper.title, review.paper %>.
+                            <%= link_to review.paper.title, review.paper %>
+                            <%= "and it has been 2 weeks" if review.updated_at < 2.weeks.ago %>
                         </p>
                         <p>
                             Last update:
