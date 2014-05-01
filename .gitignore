@@ -20,6 +20,7 @@
 # Ignore other unneeded files
 database.yml
 doc/
+.metadata/
 *.swp
 *~
 .project
