@@ -10,7 +10,7 @@ end
 def make_users
   require Rails.root.join 'lib/faker/academic'
   # create admin
-  admin = User.create!( name: "John Admin Smith", email: "admin@example.com", password: "123123", password_confirmation: "123123", admin: true, editor: true, institution: "University of Nottingham", job_title: "Researcher" )
+  admin = User.create!( name: "John Admin Smith", email: "admin@example.com", password: "123123", password_confirmation: "123123", admin: true, editor: true, institution: "University of Nottingham", job_title: "Researcher", tag_list: ["computer science, big data, mathematics, web design, information science"] )
   
   # create 25 users
   20.times do |n|
@@ -24,7 +24,7 @@ def make_users
     end
     
     email = "user#{n+1}@example.com"
-    password = "password123"
+    password = "123123"
     editor = n%2
     User.create!( name: name, email: email, password: password, password_confirmation: password, institution: company, job_title: rank, editor: editor, tag_list: tags )
   end
