@@ -33,9 +33,9 @@ end
 def make_subjects
   # create 4 subjects
   Subject.create!(name: "Computer Science")
-  Subject.create!(name: "Algebra")
-  Subject.create!(name: "Biotechnology")
-  Subject.create!(name: "Classical History")
+  Subject.create!(name: "Mathematics")
+  Subject.create!(name: "Statistics")
+  Subject.create!(name: "Quantitative Biology")
 end
 
 def make_fund

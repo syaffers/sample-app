@@ -1,6 +1,6 @@
 <% provide(:title, "All Subjects")%>
 <h1>All Subjects</h1>
-<div class="row">
+<div class="row-fluid">
     <div class="span12 subjects">  
         <% @subjects.each do |subject| %>
             <li><%= subject.name %>
@@ -10,8 +10,20 @@
                 <% end %>
             </li>
         <% end %>
+        <li><%= link_to "New subject...", new_subject_path %></li>
         </ul>
-        <%= link_to "New subject...", new_subject_path %>
+    </div>
+    
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <h3>Tag Cloud</h3>
+        <p>The tag cloud describes how many users have tagged a certain topic in their profile and could be useful to determine which journals/topics have potential reviewers</p>
+        <div class="tag-cloud">
+            <% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+                <%= content_tag(:span, tag.name, :class => css_class ) %>
+            <% end %>
+        </div>
     </div>
 </div>
 

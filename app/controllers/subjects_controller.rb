@@ -42,6 +42,7 @@ class SubjectsController < ApplicationController
   
   def index
     @subjects = Subject.all
+    @tags = User.tag_counts_on(:tags)
   end
   
   private

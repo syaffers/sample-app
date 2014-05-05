@@ -19,7 +19,7 @@ class StaticPagesController < ApplicationController
         if !(paper.user == current_user)
           matching_tags = paper.tag_list & current_user.tag_list
           if !paper.reviews.pluck(:user_id).include? current_user.id
-            if matching_tags.count.to_f / paper.tag_list.count > 0.5
+            if matching_tags.count.to_f / paper.tag_list.count > 0.25
               matching_papers << paper
             end
           end

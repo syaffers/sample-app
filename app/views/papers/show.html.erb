@@ -91,9 +91,6 @@
                         Paper published
                     <% else %>
                         Paper under reviewing process
-                        <% if accepted_reviews_for(@paper) >= 3 && paper_user?(@paper)%>
-                            <%= link_to "Publish this paper", publish_paper_path(@paper), class: "publish", method: :put %>
-                        <% end %>
                     <% end %>
                 </p>
                 <p>
